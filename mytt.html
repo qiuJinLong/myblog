@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <style type="text/css">
+        body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;border:0;}
+        body{font-size:12px; font-family:Verdana;}
+        ul,ol{list-style:none;}
+        a{text-decoration:none;}
+
+        body{ background: url("./img/back.jpg") left top repeat;}
+        .videoBox{ width: 1000px; height: 540px; margin: 0 auto; position: relative; overflow: hidden; margin-top: 10px;
+            background:url("./img/video_bg.jpg") left bottom no-repeat; }
+        .video{width: 100%; height: 500px; position: relative;}
+        #video_div{ width: 100%; height: 100%; position: absolute; left:0; top: 0; background: black;}
+        #video_div video{ position: absolute; width: 90%; height: 90%; left: 5%; top: 5%;}
+
+        .videoBar{height: 40px}
+        .videoBar .play{float: left;}
+        .videoBar .play:after{ content: ""; display: block; clear: both;}
+        .videoBar .play img{ float: left;}
+        .videoBar .full{float: right;}
+        .timer{ width: 130px; float: left; margin-top: 10px; color: #ccc;}
+        .timeThis{color: #fff;}
+        .volume{ width: 100px; border: 1px solid #ccc; height: 6px; border-radius: 3px; margin-top: 15px; margin-right: 5px; float: right;}
+        .full img{ float: right; margin-top: 13px; margin-right: 10px;}
+        .volume_this{ width: 100%; height: 6px; position: relative; background: #ccc;}
+        .button{ width: 12px; height: 12px; border-radius: 50%; background: #fff; position: absolute; top:-3px; right: 0; cursor: pointer;  }
+
+        .speed{ width: 998px; height: 6px; position: absolute; bottom: 45px; left: 0; border-radius: 3px; border: 1px solid #ccc; }
+        .speed_buffer{ height: 6px; width: 0%; background: #999;}
+        .speed_this{ height: 6px; width: 12px; background: #eee; height: 6px; margin-top: -6px; position: relative;}
+
+        #ad{position: fixed; width: 100%; height: 100%; left: 0; top: 0; background: rgba(0,0,0,0.5); color:#fff; font-size: 50px; text-align: center; font-weight: bold; display: none;}
+    </style>
+    <script type="text/javascript">
+        var aSource = ["http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4", "../v/1.mp4", "../v/2.mp4", "../v/3.mp4"];
+        window.onload = function() {
+            var oV = document.getElementById("v1");
+            var oPlay = document.getElementById("play");
+            var oPause = document.getElementById("pause");
+            var oStop = document.getElementById("stop");
+            var oAd = document.getElementById("ad");
+            var iNow = 0;
+            if(localStorage.nowTime) {
+                oV.currentTime = localStorage.nowTime;
+            }
+
+            oV.oncanplay=function(){
+                alert('可以播');
+            };
+
+            //1.播放、暂停、停止
+            oPlay.onclick = function() {
+                oV.play();
+                oPlay.style.display = "none";
+                oPause.style.display = "block";
+            };
+
+            oPause.onclick = function() {
+                oV.pause();
+                oPause.style.display = "none";
+                oPlay.style.display = "block";
+            };
+
+            oStop.onclick = function() {
+                oV.pause();
+                oV.currentTime = 0;
+                oPlay.style.display = "block";
+                oPause.style.display = "none";
+            };
+
+            //播放进度
+            ;(function() {
+                var oSpeedThis =document.querySelector(".speed_this");
+                var oSpeedThisMaxWidth = oSpeedThis.parentNode.offsetWidth - 2;
+                var oBtn = document.querySelector(".speed_this .button"),
+                        scale = 0,
+                        //dragScale
+                        oSpeedThisWidth = 12;
+                var oTimeThis = document.querySelector(".timeThis");
+                var oTotalTime = document.querySelector("#totalTime");
+                oV.ontimeupdate = function() {
+                    scale = oV.currentTime/oV.duration;
+                    oSpeedThisWidth = scale*oSpeedThisMaxWidth;
+                    oSpeedThis.style.width = (oSpeedThisWidth > 12 ? oSpeedThisWidth : 12) + "px";
+                    //时间
+                    oTimeThis.innerHTML = parseInt(oV.currentTime/60)+":"+parseInt(oV.currentTime%60);
+                    oTotalTime.innerHTML = parseInt(oV.duration/60)+":"+parseInt(oV.duration%60);
+                    //存储播放进度
+                    localStorage.nowTime = oV.currentTime;
+                };
+
+                //拖拽
+                oBtn.onmousedown = function(ev) {
+                    var disX = ev.clientX - oBtn.offsetLeft;
+                    document.onmousemove = function(ev) {
+                        var l = ev.clientX - disX;
+                        l<0 && (l=0);
+                        l>oSpeedThisMaxWidth && (l=oSpeedThisMaxWidth);
+                        scale = l/oSpeedThisMaxWidth;
+                        oSpeedThisWidth = scale*oSpeedThisMaxWidth + 10;
+                        oSpeedThis.style.width = (oSpeedThisWidth > oSpeedThisMaxWidth ? oSpeedThisMaxWidth : oSpeedThisWidth) + "px";
+                        oV.currentTime=scale*oV.duration;
+                    };
+                    document.onmouseup = function() {
+                        document.onmouseup = null;
+                        document.onmousemove = null;
+                    };
+                    return false;
+                };
+            })();
+
+            //缓冲进度
+            ;(function() {
+                var oSpeedBuffer = document.querySelector(".speed_buffer");
+                oV.onprogress = function() {
+                    try {
+                        oSpeedBuffer.style.width = oV.buffered.end(0)/oV.duration*100 + "%";
+                    } catch(e) {
+                        console.log("已缓冲，在已经缓冲的情况下，会报异常! 当然不排除其他情况也可能报异常");
+                    }
+                };
+            })();
+
+            //音量控制
+            ;(function() {
+                var oVolumeBox = document.querySelector(".volume_this");
+                var oBtn = document.querySelector(".volume_this .button");
+                var oVolParWidth = oVolumeBox.parentNode.offsetWidth;
+                var scale = 0;
+                oBtn.onmousedown = function(ev) {
+                    var disX = ev.clientX - oBtn.offsetLeft;
+                    document.onmousemove = function(ev) {
+                        var l = ev.clientX - disX;
+                        l<0 && (l=0);
+                        if(l > oVolParWidth-oBtn.offsetWidth) l=oVolParWidth-oBtn.offsetWidth;
+                        scale = l/(oVolParWidth-oBtn.offsetWidth);
+                        oVolumeBox.style.width = scale*100 + "%";
+                        oV.volume = scale;
+                    };
+                    document.onmouseup = function() {
+                        document.onmousemove = null;
+                        document.onmousup = null;
+                    };
+                    return false;
+                };
+            })();
+
+            //广告
+            oV.onended = function() {
+                oAd.style.display = "block";
+                //播放完就没有播放时间了
+                delete  localStorage.nowTime;
+            }
+
+            //下一个
+            ;(function() {
+                var oNext = document.getElementById("next");
+                var oSpeedBox = document.querySelector(".speed_this");
+                var oBtn = document.querySelector(".speed_this .button");
+                oNext.onclick = function() {
+                    iNow++;
+                    oV.currentTime = 0;
+                    delete  localStorage.nowTime;
+                    oSpeedBox.style.width=0;
+                    oPlay.style.display='block';
+                    oPause.style.display='none';
+                    oV.src = aSource[iNow%aSource.length];
+                }
+            })();
+
+        };
+    </script>
+</head>
+<body>
+    <div class="videoBox">
+        <div class="video_play">
+            <div class="video">
+                <div id="video_div">
+                    <video id="v1" src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
+                </div>
+            </div>
+            <div class="videoBar">
+                <!-- 播放、暂停等操作 -->
+                <div class="play">
+                    <img id="stop" src="img/stop.png" height="40" alt="重放" />
+                    <img id="prev" src="img/prev.jpg" height="40" alt="上一首" />
+                    <img id="play" src="img/play.jpg" height="40" alt="播放" />
+                    <img id="pause" src="img/pause.jpg" height="40" alt="暂停" style="display: none;" />
+                    <img id="next" src="img/next.jpg" height="40" alt="下一首"/>
+                </div>
+                <!-- 声音和时间 -->
+                <div class="full">
+                    <div class="timer">
+                        <span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+                    </div>
+                    <div class="volume">
+                        <div class="volume_this"><div class="button"></div></div>
+                    </div>
+                    <img src="img/horn.png" />
+                </div>
+                <!-- 进度条 -->
+                <div class="speed">
+                    <div class="speed_buffer"></div>
+                    <div class="speed_this"><div class="button"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ad">
+        这是广告！
+    </div>
+</body>
+</html>
