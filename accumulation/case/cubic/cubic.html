@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1">
+    <title>cubic</title>
+    <style>
+        *{ margin:0; padding:0; list-style:none;}
+        .cubic{ width:200px; height:200px; margin:200px auto;  -webkit-transform:perspective(800px) rotateY(-60deg) rotateX(30deg); position:relative; -webkit-transform-style:preserve-3d;}
+        .cubic div{ width:100%; height:100%; position:absolute; left:0; top:0; opacity:0.8; border:1px solid #ccc;}
+        .cubic div.front{ -webkit-transform:translateZ(100px);}
+        .cubic div.back{ -webkit-transform:translateZ(-100px);}
+        .cubic div.left{ -webkit-transform:translateX(-100px) rotateY(-90deg);}
+        .cubic div.right{ -webkit-transform:translateX(100px) rotateY(90deg);}
+        .cubic div.top{ -webkit-transform:translateY(-100px) rotateX(90deg);}
+        .cubic div.bottom{ -webkit-transform:translateY(100px) rotateX(-90deg);}
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var oDiv=document.querySelector('.cubic');
+            var y=-60;
+            var x=30;
+            oDiv.addEventListener("touchstart", function(ev) {
+                var disX=ev.targetTouches[0].pageX-y;
+                var disY=ev.targetTouches[0].pageY-x;
+
+                function fnMove(ev) {
+                    y=ev.targetTouches[0].pageX-disX;
+                    x=ev.targetTouches[0].pageY-disY;
+                    oDiv.style.webkitTransform='perspective(800px) rotateY('+y+'deg) rotateX('+x+'deg)';
+                }
+
+                function fnEnd() {
+                    oDiv.removeEventListener("touchmove");
+                    oDiv.removeEventListener("touchend");
+                }
+
+                document.addEventListener('touchmove',fnMove,false);
+                document.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            }, false);
+        }, false);
+    </script>
+</head>
+
+<body>
+<div class="cubic">
+    <div class="front" style="background:#36F"></div>
+    <div class="back" style="background:#F66"></div>
+    <div class="left" style="background:#09C"></div>
+    <div class="top" style="background:#C69"></div>
+    <div class="bottom" style="background:#6C3"></div>
+    <div class="right" style="background:#f90"></div>
+</div>
+</body>
+</html>
