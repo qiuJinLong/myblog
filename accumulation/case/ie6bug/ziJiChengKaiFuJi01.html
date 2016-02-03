@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    div{width: 200px; height: 200px; border: 2px solid #000; margin: 100px auto;}
+    div span{ display: block; margin-left: -20px; width: 50px; height: 50px; background: red;}
+    /*
+        bug原因：
+            子级有个maring-left是负值，本来应该有一块在父级的左边，但是ie6下缺没有
+            解决方法：
+                给子级加上样式position:relative;
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div>
+        <span></span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    ul{ width: 500px; margin: 100px auto; background: green;}
+    li{ overflow: hidden; zoom:1; list-style: none; background:red;}
+    li div{ width: 50px; height: 50px; background: yellow;}
+    .left{display: inline; float: left;}
+    .right{display: inline; float: left;}
+    /*
+        bug原因：
+            li的子元素，如果全部都浮动，li下方就会产生怪异的间距
+            bug解决方法：
+                给li加上vertical-align：middle/top/bottom，主要是给li加上vertical-align属性，它的值基本上写啥都行
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <ul>
+        <li>
+            <div class="left"></div>
+            <div class="right"></div>
+        </li>
+        <li>
+            <div class="left"></div>
+            <div class="right"></div>
+        </li>
+        <li>
+            <div class="left"></div>
+            <div class="right"></div>
+        </li>
+        <li>
+            <div class="left"></div>
+            <div class="right"></div>
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    div{width: 500px; border: 1px solid red;}
+    /*
+        bug原因：
+            ie6下，如果不写高度，默认不是0。而是大约是文字的大小
+            解决方法：
+                给div加上height:0; overflow:hidde;
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>图片延迟加载</title>
+<style type="text/css">
+    *{ margin: 0; padding: 0; list-style: none;}
+    #ul1 {width: 930px; margin: 30px auto;}
+    #ul1 li{ float: left; width: 310px; height: 310px;}
+    #ul1 li img{width: 310px; height: 310px;}
+</style>
+<script type="text/javascript">
+    function getPos(obj) {
+        var l=0;
+        var t=0;
+        while(obj) {
+            l += obj.offsetLeft;
+            t += obj.offsetTop;
+            obj = obj.offsetParent;
+        }
+        return {left:l, top:t};
+    }
+
+    window.onload = function() {
+        var oUl = document.getElementById("ul1");
+        var aImg = oUl.getElementsByTagName("img");
+        window.onscroll = function() {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var clientHeight = document.documentElement.clientHeight;
+            for(var i=0; i<aImg.length; i++) {
+                var oImg = aImg[i];
+                var top = getPos(oImg).top;
+                if(top<scrollTop+clientHeight) {
+                    oImg.src=oImg.getAttribute("_src");
+                }
+            }
+        };
+    };
+</script>
+</head>
+<body>
+    <ul id="ul1">
+        <li><img _src="images/m1.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m2.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m3.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m4.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m5.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m6.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m7.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m8.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m9.jpg" width="310" height="310" /></li>
+        <li><img _src="images/m10.jpg" width="310" height="310" /></li>
+    </ul>
+</body>
+</html>

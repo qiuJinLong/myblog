@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    div{ width: 200px; height: 200px; border: 2px solid #000; margin: 100px auto;}
+    div span{ display: block; width: 50px; height: 500px; background: red; }
+    /*
+        bug原因：
+            子级的高度或者宽度比父级高，则会撑开父级
+            解决方法：
+                父级加上overflow:hidde;
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div>
+        <span></span>
+    </div>
+</body>
+</html>

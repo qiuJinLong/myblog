@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    .box{position: relative; width: 501px; height: 501px; border: 2px solid red; margin: 100px auto;}
+    .box span{position: absolute; right: 0; bottom: 0; width: 81px; height: 81px; background: blue;}
+    /*
+        bug原因：
+            父级相对定位，宽度为奇数；子级绝对定位，宽度为奇数，并且right0，bottom：0；那么子级
+            不能紧贴着父级的右下角，会有1像素的空白
+            解决方法：
+                别父级和子级都是奇数就可以了
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div class="box">
+        <span></span>
+    </div>
+</body>
+</html>

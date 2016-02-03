@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    .box{position: relative; width: 200px; margin: 100px auto; border: 1px solid red;}
+    .shadow{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: 0.3;}
+    /*
+        bug原因：
+            父级相对定位，子级绝对定位，子级不能设置height:100%来自适应父级的高度。
+            解决方法：
+                .shadow加上样式{z-index:-1; height:9999px;}  然后给p加上color：#fff(ie6模拟器不支持透明)
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div class="box">
+        <div class="shadow"></div>
+        <p>建外大街、国贸、安定门、国贸、安定门、国贸、安定门、国贸、安定门、国贸、安定门、新街口、五道口、北新桥/簋街、广外大街、西城区、东直门、西直门/动物园、劲松、八里庄</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    div, h3{width: 200px; height: 200px;}
+    div{float: left; background: red;}
+    h3{background: green;}
+    /*
+        bug原因：
+            同级块元素中，一个浮动了，另一个没浮动。这两个元素间就会产生3像素的间距
+            解决方法：
+                两个都浮动，即h3加上样式float:left;
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div></div><h3></h3>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{magin:0; padding: 0;}
+    div{width: 200px; margin: 100px auto;}
+    span{ display: inline; width: 100%; float: left; }
+    /*
+        bug原因：
+            两个浮动元素中间有注释，并且浮动元素width为100%；
+            解决方法：
+                浮动元素加background：none;
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div>
+        <span>my name is harry!</span>
+        <span>my name is harry!</span>
+        <span>my name is harry!</span>
+        <!-- 注释 -->
+        <span>my name is harry!</span>
+        <span>my name is harry!</span>
+    </div>
+</body>
+</html>

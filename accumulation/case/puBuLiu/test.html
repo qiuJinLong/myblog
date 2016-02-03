@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    body{ margin-top: 20px; }
+    div{  width: 300px; height: 100px; margin: 0 auto; background: darkred; overflow: auto; font-size: 12px;}
+    p{ height: 20px;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var oBody = document.body;
+
+        //console.log("offsetHeight : " + oBody.offsetHeight);
+        console.log("oDiv scrollHeight : " + document.body.scrollHeight);
+        console.log("oDiv scrollWidth : " + document.body.scrollWidth);
+        //console.log("oDiv scrollHeight : " + document.documentElement.scrollHeight);
+        //console.log("oDiv scrollWidth : " + document.documentElement.scrollWidth);
+        //console.log("documentElement clientHeight : " + document.documentElement.clientHeight);
+        //console.log("documentElement clientWidth : " + document.documentElement.clientWidth);
+    };
+</script>
+</head>
+<body>
+<!-- 测试offsetHeight  和   scrollHeight的区别，并且确定什么是scrollHeight -->
+<!--<div id="div1"><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p><p>1231</p></div>-->
+    <div></div>
+</body>
+</html>

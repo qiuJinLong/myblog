@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>瀑布流</title>
+    <style type="text/css">
+        *{ margin: 0; padding: 0; list-style: none;}
+        #div1{ width: 966px; margin: 10px auto;}
+        #div1 ul{ float: left; width: 300px; border: 1px solid red; margin: 10px;}
+        #div1 ul li{width: 300px; margin: 10px 0; background: red;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var oDiv = document.getElementById("div1");
+            var aUl = oDiv.children;
+            function create() {
+                for(var i=0; i<20; i++) {
+                    //1、创建li
+                    var oLi = document.createElement("li");
+                    oLi.style.height = parseInt(Math.random()*450 + 50) + "px";
+                    var r = parseInt(Math.random()*256);
+                    var g = parseInt(Math.random()*256);
+                    var b = parseInt(Math.random()*256);
+                    oLi.style.background="rgb("+r+","+g+","+b+")";
+
+                    //插入最短的ul
+                    var oMinUl = null;
+                    var h0 = aUl[0].offsetHeight;
+                    var h1 = aUl[1].offsetHeight;
+                    var h2 = aUl[2].offsetHeight;
+                    if(h0 < h1) {
+                        if(h0 < h2) {
+                            oMinUl = aUl[0];
+                        } else {
+                            oMinUl = aUl[2];
+                        }
+                    } else {
+                        if(h1 < h2) {
+                            oMinUl = aUl[1];
+                        } else {
+                            oMinUl = aUl[2];
+                        }
+                    }
+                    //找到最短的插
+                    oMinUl.appendChild(oLi);
+                }
+            }
+
+            create();
+
+            window.onscroll = function() {
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var clientHeight = document.documentElement.clientHeight;
+                var bodyHeight = document.body.scrollHeight;
+                if(scrollTop >= bodyHeight - clientHeight - 200) {
+                    create();
+                }
+
+            }
+
+        };
+    </script>
+</head>
+<body>
+<div id="div1">
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+    *{margin:0; padding: 0;}
+    .clear:after{display: block; content: ""; clear: both;}
+
+    .box{margin: 100px auto; border: 2px solid red;}
+    .box div{ width: 200px; height:200px; background: green; color: #fff; line-height: 200px; text-align: center; font-size: 50px;}
+    .left{display: inline; float: left;}
+    .right{display: inline; float: right;}
+    /*
+        bug原因：
+            这种方式在ie6下不能清除浮动
+            解决方法：
+                给clear再加一个样式.clear{zoom:1}; 触发ie6的haslayout
+    */
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    <div class="box clear">
+        <div class="left">left</div>
+        <div class="right">right</div>
+    </div>
+</body>
+</html>
