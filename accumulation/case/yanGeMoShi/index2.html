@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>严格模式作用范围</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+function show() {
+    a = 12;
+}
+    show();
+    alert(a);
+    function show2() {
+        "use strict";
+        b = 5;
+    }
+    show2();
+    alert(b);
+</script>
+
+</head>
+<body>
+严格模式：如何开启严格模式？<br />
+'use strict';<br />
+
+严格模式好处：<br />
+1. 修复了局部函数里面this<br />
+2. 定义变量必须加var<br />
+3. 不允许你在if、for等里面是定义函数<br />
+4. 干掉了with<br />
+
+严格模式作用范围：<br />
+1. 最大也冲不出script标签<br />
+2. 单个函数<br />
+3. 作用于整个js文件<br />
+
+*** 每个js文件开头一定要加 严格模式 'use strict';<br />
+
+严格模式兼容么？不兼容<br />
+</body>
+</html>

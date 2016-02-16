@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>日历1</title>
+<style type="text/css">
+*{ margin: 0; padding: 0; list-style: none;}
+    .calender{ position: relative; width: 210px; overflow: hidden; border: 1px solid #000;}
+    .calender a{ position: absolute; top: 0; text-decoration: none;}
+    .calender a:hover{ text-decoration: underline;}
+    .calender a.prev{ left: 0;}
+    .calender a.next{right: 0;}
+
+    .calender span{display: block; width: 210px; height: 20px; line-height: 20px; text-align: center;}
+
+    .calender ol{width: 210px; overflow: hidden; border-bottom: 1px solid #ccc;}
+    .calender li{ float: left; width: 30px; height: 30px; line-height: 30px; text-align: center;}
+    .calender ul{width: 210px; overflow: hidden;}
+    .calender .past{ color: #ccc;}
+    .calender .week_end{ color: red;}
+    .calender .today{ background: #c00; color: #fff; font-weight: bold;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        //获取元素
+        var oDiv = document.getElementById("calender");
+        var oBtnPrev = oDiv.children[0];
+        var oBtnNext = oDiv.children[1];
+        var oSpan = oDiv.getElementsByTagName("span")[0];
+        var oUl = oDiv.getElementsByTagName("ul")[0];
+
+        var oDate = new Date();
+        oSpan.innerHTML = oDate.getFullYear()+"年"+(oDate.getMonth()+1)+"月";
+
+        //补空格
+        var oDate = new Date();
+        oDate.setDate(1);
+        var day = oDate.getDay();
+        if(day == 0) {
+            day = 7;
+        }
+        for(var i=1; i<day; i++) {
+            var oLi = document.createElement("li");
+            oUl.appendChild(oLi);
+        }
+
+        //创建li
+        var oDate = new Date();
+        oDate.setDate(1);
+        oDate.setMonth(oDate.getMonth() + 1);
+        oDate.setDate(0);
+        var n = oDate.getDate();
+        var oDate = new Date();
+        var today = oDate.getDate();
+        for(var i=1; i<=n; i++) {
+            var oLi = document.createElement("li");
+            oLi.innerHTML = i;
+            if(i<today) {
+                oLi.className = "past";
+            } else if(i == today) {
+                oLi.className = "today";
+            }
+            oUl.appendChild(oLi);
+        }
+
+        for(var i=0; i<oUl.children.length; i++) {
+            if(i%7 == 5 || i%7 == 6) {
+                oUl.children[i].className = "week_end";
+            }
+        }
+
+    };
+</script>
+</head>
+<body>
+    <div id="calender" class="calender">
+        <a href="javascript:;" class="prev">&lt;&lt;</a>
+        <a href="javascript:;" class="next">&gt;&gt;</a>
+        <span>2014年10月</span>
+        <ol>
+            <li>一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+            <li class="week_end">六</li>
+            <li class="week_end">日</li>
+        </ol>
+        <ul>
+            <!--<li class="past">1</li>
+            <li class="past">2</li>
+            <li class="past">3</li>
+            <li class="past">4</li>
+            <li class="past">5</li>
+            <li class="past">6</li>
+            <li class="past">7</li>
+            <li class="past">8</li>
+            <li class="past">9</li>
+            <li class="past">10</li>
+            <li class="past">11</li>
+            <li class="past">12</li>
+            <li class="week_end">13</li>
+            <li class="today">14</li>
+            <li>15</li>
+            <li>16</li>
+            <li>17</li>
+            <li>18</li>
+            <li>19</li>
+            <li class="week_end">20</li>
+            <li class="week_end">21</li>
+            <li>22</li>
+            <li>23</li>
+            <li>24</li>
+            <li>25</li>
+            <li>26</li>
+            <li class="week_end">27</li>
+            <li class="week_end">28</li>
+            <li>29</li>-->
+        </ul>
+    </div>
+</body>
+</html>
