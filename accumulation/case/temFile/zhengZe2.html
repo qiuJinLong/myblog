@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript">
+        //正则替换链接，链接有换行
+        function t1(){
+            var con = document.getElementsByName('content')[0].value;//内容里有<a href="">.....</a>，但是有换行
+            var reg = /<a[\s]+[\d\D]*<\/a>/g;//采用[\d\D]或[\w\W]或[\s\S]来解决不能换行问题
+            alert(con.replace(reg,'----'));
+        }
+        //正则把每一行的结尾数字，换成#号---多行模式，添加/m(每行当作结尾)和/g(全局匹配)模式增强符
+        function t2(){
+            var con = document.getElementsByName('content')[0].value;//写几行文字，每行以数字结尾
+            var reg = /\d+$/gm;
+            alert(con.replace(reg,'#'));
+        }
+    </script>
+</head>
+<body>
+<textarea rows="5" cols="30" name="content"></textarea><br />
+<button onclick="t1();">正则替换链接(需要考虑换行情况)</button><br />
+<button onclick="t2();">正则多行替换</button><br />

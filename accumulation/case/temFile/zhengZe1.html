@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        //        var str = "fdfasas  dafsfasa    aaaaa";
+        //        str = str.replace(/\s+.*/g, "");
+        //        alert(str);
+
+        //        var str1 = "    dsaf      ";
+        //        str1 = str1.replace(/^\s+|\s+$/, "");
+        //        document.write(str1);
+        //        document.write("112323");
+
+        /*    var str1 = "#box ul  .red    input";
+         str1 = str1.split(/\s+/);
+         console.log(str1);*/
+
+        var str1 = "#box ul  .red    input";
+        alert(/\bul\b/.test(str1));
+
+        function Person(name, age) {
+            //加工
+            this.name = name;
+            this.age = age;
+        }
+
+        Person.prototype = {
+            showName : function() {
+                return this.name;
+            },
+            showAge : function() {
+                return this.age;
+            },
+            constructor: Person
+        }
+        var p1 = new Person("ae", 1);
+        //alert(p1.constructor);
+        alert(p1 instanceof Person);
+    </script>
+
+</head>
+<body>
+    new干啥了？ <br>
+    1、系统会自动创建空白对象，并且赋值给this <br>
+    2、系统自动返回this <br>
+</body>
+</html>
