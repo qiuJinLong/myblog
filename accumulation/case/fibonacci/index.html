@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>fibonacci</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+    var arr = {};
+    function fn(n, arr){
+        //console.log("thisN : " + n);
+        if(arr[n]) {
+            arr[n]++;
+        } else {
+            arr[n]=1;
+        }
+        if(n<=2){
+            //console.log(1);
+            return 1;
+        }else{
+            //console.log("fn("+n+"-1)"+"+fn("+n+"-2)");
+            return fn(n-1, arr)+fn(n-2, arr);
+        }
+    }
+
+    //alert(fn(5));
+    alert(fn(10, arr));
+    console.log(arr);
+
+    function digui(n) {
+        if(n<=1) {
+            return 1;
+        } else {
+            return n+digui(n-1);
+        }
+    }
+    //alert(digui(8));
+</script>
+</head>
+<body>
+
+</body>
+</html>

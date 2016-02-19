@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>div动</title>
+    <style type="text/css">
+        #div1{ position: absolute; left: 300px; top: 300px; width: 200px; height: 200px; background: red;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var oDiv = document.getElementById("div1");
+            var step = 10;
+            var bLeft = bTop = bRight = bBottom = false;
+            document.onkeydown = function(ev) {
+                var oEvent = ev || event;
+                var keyCode = oEvent.keyCode;
+                if(keyCode == 37) {
+                    bLeft = true;
+                }
+                if(keyCode == 38) {
+                    bTop = true;
+                }
+                if(keyCode == 39) {
+                    bRight = true;
+                }
+                if(keyCode == 40) {
+                    bBottom = true;
+                }
+            };
+
+            document.onkeyup = function(ev) {
+                var oEvent = ev || event;
+                var keyCode = oEvent.keyCode;
+                if(keyCode == 37) {
+                    bLeft = false;
+                }
+                if(keyCode == 38) {
+                    bTop = false;
+                }
+                if(keyCode == 39) {
+                    bRight = false;
+                }
+                if(keyCode == 40) {
+                    bBottom = false;
+                }
+            };
+
+            setInterval(function() {
+                if(bLeft) {
+                    oDiv.style.left = oDiv.offsetLeft - step + "px";
+                }
+                if(bTop) {
+                    oDiv.style.top = oDiv.offsetTop - step + "px";
+                }
+                if(bRight) {
+                    oDiv.style.left = oDiv.offsetLeft + step + "px";
+                }
+                if(bBottom) {
+                    oDiv.style.top = oDiv.offsetTop + step + "px";
+                }
+            }, 30   );
+
+        };
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
