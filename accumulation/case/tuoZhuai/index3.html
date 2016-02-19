@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>拖拽</title>
+<style type="text/css">
+#div1{ position: absolute; left: 0; top: 0; width: 200px; height: 200px; background: #ccc;}
+    .box{position: absolute; left: 0; top: 0; border: 4px dashed #000;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        oDiv.onmousedown = function(ev) {
+            var oEvent = ev || event;
+            var disX = oEvent.clientX - oDiv.offsetLeft;
+            var disY = oEvent.clientY - oDiv.offsetTop;
+
+            //创建div
+            var oBox = document.createElement("div");
+            oBox.style.width = oDiv.offsetWidth - 8 + "px";
+            oBox.style.height = oDiv.offsetHeight - 8 + "px";
+            oBox.style.left = oDiv.offsetLeft + "px";
+            oBox.style.top = oDiv.offsetTop + "px";
+            oBox.className = "box";
+            document.body.appendChild(oBox);
+
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                oBox.style.left = oEvent.clientX - disX + "px";
+                oBox.style.top = oEvent.clientY - disY +"px";
+            };
+
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oBox.releaseCapture && oBox.releaseCapture();
+                //改变oDiv的位置
+                oDiv.style.left = oBox.offsetLeft + "px";
+                oDiv.style.top = oBox.offsetTop + "px";
+                //删除oBox
+                document.body.removeChild(oBox);
+            };
+            oBox.setCapture && oBox.setCapture();
+            return false;
+        };
+
+    };
+</script>
+</head>
+<body>
+dsafdsafdsa
+<div id="div1"></div>
+
+sadfdsafdsafdsaf
+</body>
+</html>

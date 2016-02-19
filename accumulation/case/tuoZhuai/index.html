@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>拖拽</title>
+    <style type="text/css">
+        #div1{ position: absolute; left: 0; top: 0; width: 200px; height: 200px; background: red; cursor: move;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var oDiv = document.getElementById("div1");
+
+            //按下存距离
+            var disX = 0;
+            var disY = 0;
+            oDiv.onmousedown = function(ev) {
+                var oEvent = ev || event;
+                disX = oEvent.clientX - oDiv.offsetLeft;
+                disY = oEvent.clientY - oDiv.offsetTop;
+
+                oDiv.onmousemove = function(ev) {
+                    var oEvent = ev || event;
+                    //改变位置 left top
+                    oDiv.style.left = oEvent.clientX - disX +"px";
+                    oDiv.style.top = oEvent.clientY - disY +"px";
+                };
+
+                oDiv.onmouseup = function() {
+                    //释放资源
+                    oDiv.onmousemove = null;
+                    oDiv.onmouseup = null;
+                    oDiv.setCapture && oDiv.setCapture();
+                };
+                //设置捕获
+                oDiv.setCapture && oDiv.setCapture();
+                return false;
+            };
+
+        };
+    </script>
+</head>
+<body>
+dsafdsafdsa
+<div id="div1"><img src="logo.png" width="100" height="100" /></div>
+
+sadfdsafdsafdsaf
+</body>
+</html>

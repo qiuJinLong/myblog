@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>拖拽</title>
+<style type="text/css">
+#div1{ position: absolute; left: 0; top: 0; width: 200px; height: 200px; background: #ccc;}
+
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+
+        drag(oDiv);
+
+        function drag(obj) {
+            obj.onmousedown = function(ev) {
+                var oEvent = ev || event;
+                var disX = oEvent.clientX - obj.offsetLeft;
+                var disY = oEvent.clientY - obj.offsetTop;
+
+                //创建div
+                var oBox = document.createElement("div");
+                oBox.style.background = "#ccc";
+                oBox.style.opacity = "0.4";
+                oBox.style.filter = "alpha(opacity:40)";
+                oBox.style.width = obj.offsetWidth + "px";
+                oBox.style.height = obj.offsetHeight + "px";
+                oBox.style.position = "absolute";
+                oBox.style.left = obj.offsetLeft + "px";
+                oBox.style.top = obj.offsetTop + "px";
+                oBox.innerHTML = obj.innerHTML;
+                document.body.appendChild(oBox);
+
+                document.onmousemove = function(ev) {
+                    var oEvent = ev || event;
+                    oBox.style.left = oEvent.clientX - disX + "px";
+                    oBox.style.top = oEvent.clientY - disY + "px";
+                };
+
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    oBox.releaseCapture && oBox.releaseCapture();
+                    obj.style.left = oBox.offsetLeft + "px";
+                    obj.style.top = oBox.offsetTop + "px";
+                    document.body.removeChild(oBox);
+                };
+                oBox.setCapture && oBox.setCapture();
+                return false;
+            };
+        }
+
+    };
+</script>
+</head>
+<body>
+dsafdsafdsa
+<div id="div1">
+    <h2>标题</h2>
+    <input type="button" value="按钮" />
+</div>
+
+sadfdsafdsafdsaf
+</body>
+</html>

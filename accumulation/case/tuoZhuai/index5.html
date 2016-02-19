@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>拖拽</title>
+<style type="text/css">
+.box{ position: absolute; left: 0; top: 0; width: 200px; height: 200px; background: #ccc;}
+
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+
+        oDiv.onmousedown = function(ev) {
+            var oEvent = ev || event;
+            var disX = oEvent.clientX - oDiv.offsetLeft;
+            var disY = oEvent.clientY - oDiv.offsetTop;
+
+            //克隆div
+            var oBox = oDiv.cloneNode(true);
+            oBox.style.opacity = "0.4";
+            oBox.style.filter = "alpha(opacity:40)";
+            document.body.appendChild(oBox);
+            oBox.removeAttribute("id");
+
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                oBox.style.left = oEvent.clientX - disX + "px";
+                oBox.style.top = oEvent.clientY - disY + "px";
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oBox.releaseCapture && oBox.releaseCapture();
+                oDiv.style.left = oBox.offsetLeft + "px";
+                oDiv.style.top = oBox.offsetTop + "px";
+                document.body.removeChild(oBox);
+            };
+
+            oBox.setCapture && oBox.setCapture();
+            return false;
+
+        };
+
+
+
+
+    };
+</script>
+</head>
+<body>
+dsafdsafdsa
+<div id="div1" class="box">
+    <h2>标题</h2>
+    <input type="button" value="按钮" />
+</div>
+
+sadfdsafdsafdsaf
+</body>
+</html>

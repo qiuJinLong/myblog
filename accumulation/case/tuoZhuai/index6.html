@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>拖拽</title>
+<style type="text/css">
+    *{margin:0;padding:0; list-style:none;}
+
+    #div1{position:absolute;left:0;top:0;width:200px; height:200px; background:red;}
+</style>
+<script type="text/javascript">
+    /*
+    * 各种动
+    * ctrl+回车  还原到左上角
+    * ctrl+q  控制是否可以拖拽
+    * ctrl+上下  中心点放大缩小
+    * */
+    window.onload = function(){
+
+        var oDiv = document.getElementById("div1");
+
+        var bLeft = bTop = bRight = bBottom = false;
+        var bDrag = true;
+        var step = 10;
+
+        //var initJson = {left:"0px",top:"0px",width:"200px",height:"200px",background:"red"};
+        var initJson = {
+            left:oDiv.offsetLeft+"px",
+            top:oDiv.offsetTop+"px",
+            width:oDiv.offsetWidth+"px",
+            height:oDiv.offsetHeight+"px",
+            background:"red"
+        };
+
+        function initDiv(){
+            for(var name in initJson){
+                oDiv.style[name] = initJson[name];
+            }
+        }
+
+
+
+        document.onkeydown = function(ev){
+            var oEvent = ev || event;
+            var keyCode = oEvent.keyCode;
+
+            switch(keyCode){
+                case 37:
+                    bLeft = true;
+                    break;
+                case 38:
+                    bTop = true;
+                    break;
+                case 39:
+                    bRight = true;
+                    break;
+                case 40:
+                    bBottom = true;
+                    break;
+            }
+
+            //复位
+            if(keyCode == 13 && oEvent.ctrlKey){
+                initDiv();
+            }
+
+            //中心放大
+
+            if(keyCode == 38 && oEvent.ctrlKey){
+                bTop = false;
+                oDiv.style.width = oDiv.offsetWidth + step + "px";
+                oDiv.style.height = oDiv.offsetHeight + step + "px";
+                oDiv.style.left = oDiv.offsetLeft - step/2 + "px";
+                oDiv.style.top = oDiv.offsetTop - step/2 + "px";
+            }
+            //中心缩小
+            if(keyCode == 40 && oEvent.ctrlKey){
+                bBottom = false;
+                oDiv.style.width = oDiv.offsetWidth - step + "px";
+                oDiv.style.height = oDiv.offsetHeight - step + "px";
+                oDiv.style.left = oDiv.offsetLeft + step/2 + "px";
+                oDiv.style.top = oDiv.offsetTop + step/2 + "px";
+            }
+
+            //是否能拖 ctrl + Q
+            if(keyCode == 81 && oEvent.ctrlKey){
+                bDrag = !bDrag;
+            }
+
+        };
+
+
+
+        document.onkeyup = function(ev){
+            var oEvent = ev || event;
+            var keyCode = oEvent.keyCode;
+
+            switch(keyCode){
+                case 37:
+                    bLeft = false;
+                    break;
+                case 38:
+                    bTop = false;
+                    break;
+                case 39:
+                    bRight = false;
+                    break;
+                case 40:
+                    bBottom = false;
+                    break;
+            }
+
+        };
+
+
+
+
+        setInterval(function(){
+
+            if(bLeft){
+                oDiv.style.left = oDiv.offsetLeft - step + "px";
+            }
+
+            if(bTop){
+                oDiv.style.top = oDiv.offsetTop - step + "px";
+            }
+
+            if(bRight){
+                oDiv.style.left = oDiv.offsetLeft + step + "px";
+            }
+
+            if(bBottom){
+                oDiv.style.top = oDiv.offsetTop + step + "px";
+            }
+        },30);
+
+
+
+
+
+        drag();
+
+        function noDrag(){
+            oDiv.onmousedown = null;
+        }
+
+        function drag(){
+
+            oDiv.onmousedown = function(ev){
+
+                if(!bDrag){//不能拖
+                    return ;
+                }
+
+                var oEvent = ev || event;
+                var disX = oEvent.clientX - oDiv.offsetLeft;
+                var disY = oEvent.clientY - oDiv.offsetTop;
+
+                document.onmousemove = function(ev){
+                    var oEvent = ev || event;
+
+                    oDiv.style.left = oEvent.clientX - disX + "px";
+                    oDiv.style.top = oEvent.clientY - disY + "px";
+
+                };
+
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    oDiv.releaseCapture && oDiv.releaseCapture();
+                };
+                oDiv.setCapture && oDiv.setCapture();
+                return false;
+            };
+
+        }
+
+    };
+</script>
+</head>
+<body>
+dsafdsafdsa
+<div id="div1"></div>
+
+sadfdsafdsafdsaf
+</body>
+</html>
