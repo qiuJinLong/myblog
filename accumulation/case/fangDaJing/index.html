@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>放大镜</title>
+<style type="text/css">
+    *{ margin: 0; padding: 0;}
+    #div1{width: 310px; height: 310px; position: relative;}
+    #mask{ display:none; position: absolute; left: 0; top: 0; width: 150px; height: 150px; background: yellow; opacity: 0.4;
+    filter: alpha(opacity:40); line-height: 150px; text-align: center; cursor: move;}
+    #div2{ display: none; position: absolute; left: 320px; top: 0; width: 310px; height: 310px; overflow: hidden;}
+    #div2 img{ position:absolute; left: 0; top: 0; width: 900px; height: 900px;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv1 = document.getElementById("div1");
+        var oSpan = document.getElementById("mask");
+        var oDiv2 = document.getElementById("div2");
+        var oBigImg = oDiv2.children[0];
+
+        oDiv1.onmousemove = function(ev) {
+            var oEvent = ev || event;
+            var l = ev.clientX - oDiv1.offsetLeft - oSpan.offsetWidth/2;
+            var t = ev.clientY - oDiv1.offsetTop - oSpan.offsetHeight/2;
+            //限定范围
+            var maxWidth = oDiv1.offsetWidth - oSpan.offsetWidth;
+            var maxHeight = oDiv1.offsetHeight - oSpan.offsetHeight;
+
+            if(l < 0) {
+                l = 0;
+            } else if(l > maxWidth) {
+                l = maxWidth;
+            }
+            if(t < 0) {
+                t=0;
+            } else if(t>maxHeight) {
+                t=maxHeight;
+            }
+
+            var scaleX = l/maxWidth;
+            var scaleY = t/maxHeight;
+
+            oSpan.innerHTML = l + "|" + t;
+            oSpan.style.left = l+"px";
+            oSpan.style.top = t+"px";
+
+            //大图动
+            oBigImg.style.left = -scaleX*(oBigImg.offsetWidth - oDiv2.offsetWidth) + "px";
+            oBigImg.style.top = -scaleY*(oBigImg.offsetHeight - oDiv2.offsetHeight) + "px";
+        };
+
+        oDiv1.onmouseover = function() {
+            oSpan.style.display = "block";
+            oDiv2.style.display = "block";
+        };
+
+        oDiv1.onmouseout = function() {
+            oSpan.style.display = "none";
+            oDiv2.style.display = "none";
+        }
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1">
+        <img src="images/m1.jpg" width="310" height="310" />
+        <span id="mask"></span>
+        <div id="div2"><img src="images/b1.jpg" width="900" height="900"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>this的错误用法</title>
+<style type="text/css">
+    #div1{ width: 200px; height: 200px; background: red;}
+</style>
+<script type="text/javascript">
+    /*
+    * this的错误用法
+    * 1、定时器里面绝对不能用this
+    * 2、函数包了一层
+    * 3、行间事件
+    * 4、attachEvent中的this指向window，用面向对象解决
+    * */
+
+    function show2() {alert(this);}
+    window.onload = function(){
+        function show(){
+            alert(this);
+        }
+        var aBtn = document.getElementsByTagName("input");
+        aBtn[0].onclick = function() {
+            //alert(this);
+            show();
+            //调用show和直接弹出alert(this)是有区别的
+        };
+
+        aBtn[1].onclick = show;
+
+        aBtn[2].onclick = function() {
+            setTimeout(show, 100);
+        };
+
+        aBtn[4].attachEvent("onclick", show);
+    };
+
+</script>
+</head>
+<body>
+    <input type="button" value="按钮0" />
+    <input type="button" value="按钮1" />
+    <input type="button" value="按钮2" />
+    <input type="button" value="按钮3" onclick="show2();" />
+    <input type="button" value="按钮4" />
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>碰撞检测</title>
+<style type="text/css">
+    #div1{position: absolute; left: 20px; top: 10px; width: 20px; height: 400px; background: #ccc;}
+    #div2{position:absolute; left: 500px; top: 200px; width: 400px; height: 20px; background: green;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv1 = document.getElementById("div1");
+        var oDiv2 = document.getElementById("div2");
+        oDiv1.onmousedown = function(ev) {
+            var oEvent = ev || event,
+                    disX = oEvent.clientX - oDiv1.offsetLeft,
+                    disY = oEvent.clientY - oDiv1.offsetTop;
+            var l1 = oDiv1.offsetLeft,
+                    r1 = oDiv1.offsetLeft + oDiv1.offsetWidth,
+                    t1 = oDiv1.offsetTop,
+                    b1 = oDiv1.offsetTop + oDiv1.offsetHeight;
+
+            var l2 = oDiv2.offsetLeft,
+                    r2 = oDiv2.offsetLeft + oDiv2.offsetWidth,
+                    t2 = oDiv2.offsetTop,
+                    b2 = oDiv2.offsetTop + oDiv2.offsetHeight;
+
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+
+                l1 = oDiv1.offsetLeft;
+                r1 = oDiv1.offsetLeft + oDiv1.offsetWidth;
+                t1 = oDiv1.offsetTop;
+                b1 = oDiv1.offsetTop + oDiv1.offsetHeight;
+
+                if(r1<l2 || b1<t2 || l1>r2 || t1>b2) {
+                    //没有碰到
+                    oDiv2.style.background = "green";
+                } else {
+                    oDiv2.style.background = "red";
+                }
+
+                oDiv1.style.left = oEvent.clientX - disX + "px";
+                oDiv1.style.top = oEvent.clientY - disY + "px";
+
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oDiv1.releaseCapture && oDiv1.releaseCapture();
+            };
+            oDiv1.setCapture && oDiv1.setCapture();
+            return false;
+        };
+    };
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>事件捕获2</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        function show() {
+            alert("show");
+        }
+        //事件的绑定高级方法和事件绑定低级方法是不冲突的，两个可以同时存在
+        document.onclick = show;
+        addEvent(document, "click", show);
+        function addEvent(obj, sEv, fn) {
+            if(obj.addEventListener) {
+                obj.addEventListener(sEv, fn, false);
+            } else {
+                obj.attachEvent("on"+sEv, fn);
+            }
+        }
+
+    };
+</script>
+</head>
+<body>
+
+</body>
+</html>

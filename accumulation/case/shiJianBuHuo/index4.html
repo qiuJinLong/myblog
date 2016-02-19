@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>事件this及this的错误用法</title>
+<style type="text/css">
+    #div1{ width: 200px; height: 200px; background: red;}
+</style>
+<script type="text/javascript">
+    window.onload = function(){
+        var oDiv = document.getElementById("div1");
+        /*document.onclick = function() {
+            alert("onclick this = " + this);
+        };
+        oDiv.onclick = function() {
+            alert("div onclick this = "+this);
+        };*/
+        /*document.addEventListener("click",function (){
+            alert("addEventListener this = "+this);
+        },false);
+        oDiv.addEventListener("click", function() {
+            alert("div addEventListener this = " + this);
+        }, false);*/
+        document.attachEvent("onclick", function() {
+            //这个弹出的是window
+            alert("attachEvent this" + this);
+        }, false);
+        oDiv.attachEvent("onclick", function() {
+            //这个弹出的是window
+            alert("div attachEvent this" + this);
+        });
+
+    };
+
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

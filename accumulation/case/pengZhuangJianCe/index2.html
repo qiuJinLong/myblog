@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>碰撞检测2</title>
+<style type="text/css">
+    *{ margin: 0; padding: 0;}
+    #div1{position: absolute; left: 0px; top: 0px; width: 200px; height: 200px; background: #ccc;}
+    #div2{position:absolute; left: 500px; top: 200px; width: 200px; height: 200px; background: green;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv1 = document.getElementById("div1");
+        var oDiv2 = document.getElementById("div2");
+
+        drag(oDiv1, oDiv2);
+        drag(oDiv2, oDiv1);
+
+        function drag(obj1, obj2) {
+            obj1.onmousedown = function(ev) {
+                var oEvent = ev || event;
+                var disX = oEvent.clientX - obj1.offsetLeft;
+                var disY = oEvent.clientY - obj1.offsetTop;
+
+                document.onmousemove = function(ev) {
+                    var oEvent = ev || event;
+                    if(collTest(obj1, obj2)) {
+                        //碰到了
+                        obj2.style.background="red";
+                    } else {
+                        obj2.style.background = "green";
+                    }
+                    obj1.style.left = oEvent.clientX - disX + "px";
+                    obj1.style.top = oEvent.clientY - disY + "px";
+                };
+
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    obj1.releaseCapture && obj1.releaseCapture();
+                }
+
+                obj1.setCapture && obj1.setCapture();
+                return false;
+
+            };
+        }
+
+        function collTest(obj1, obj2) {
+            var l1 = obj1.offsetLeft,
+                    t1 = obj1.offsetTop,
+                    r1 = l1 + obj1.offsetWidth,
+                    b1 = t1 + obj1.offsetHeight;
+            var l2 = obj2.offsetLeft,
+                    t2 = obj2.offsetTop,
+                    r2 = l2 + obj2.offsetWidth,
+                    b2 = t2 + obj2.offsetHeight;
+            if(r1<l2 || b1<t2 || l1>r2 || t1>b2) {
+                //没碰到
+                return false;
+            }else {
+                return true;
+            }
+        }
+
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+</body>
+</html>

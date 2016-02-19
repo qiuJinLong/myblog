@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>拖拽</title>
+<style type="text/css">
+    #box{ position:absolute;left:400px;top:200px;width:400px;height:300px; background:#ccc; }
+
+    #box .lt{ position:absolute;left:0;top:0; width:20px; height:20px; background:red;z-index:2;}
+    #box .rt{ position:absolute;right:0;top:0; width:20px; height:20px; background:red;z-index:2;}
+    #box .rb{ position:absolute;right:0;bottom:0; width:20px; height:20px; background:red;z-index:2;}
+    #box .lb{ position:absolute;left:0;bottom:0; width:20px; height:20px; background:red; z-index:2;}
+
+    #box .l{ position:absolute;left:0;top:0; width:20px; height:100%; background:green;}
+    #box .t{ position:absolute;left:0;top:0; width:100%; height:20px; background:green;}
+    #box .r{ position:absolute;right:0;top:0; width:20px; height:100%; background:green;}
+    #box .b{ position:absolute;left:0;bottom:0; width:100%; height:20px; background:green;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oBox = document.getElementById("box");
+        var aDiv = oBox.children;
+
+        for(var i=0; i<aDiv.length; i++) {
+            drag(aDiv[i]);
+        }
+
+        function drag(oDiv) {
+            oDiv.onmousedown = function(ev) {
+                var oEvent = ev || event;
+                var oldX = oEvent.clientX;
+                var oldY = oEvent.clientY;
+                var oldW = oBox.offsetWidth;
+                var oldH = oBox.offsetHeight;
+
+                var oldLeft = oBox.offsetLeft;
+                var oldTop = oBox.offsetTop;
+
+                document.onmousemove = function(ev) {
+                    var oEvent = ev || event;
+                    var disX = oEvent.clientX - oldX;
+                    var disY = oEvent.clientY - oldY;
+
+                    if(oDiv.className.indexOf("l") != -1) {
+                        //向左 l
+                        oBox.style.width = oldW - disX + "px";
+                        oBox.style.left = oldLeft + disX + "px";
+                    }
+                    if(oDiv.className.indexOf("t") != -1) {
+                        //上 t
+                        oBox.style.height = oldH - disY + "px";
+                        oBox.style.top = oldTop + disY + "px";
+                    }
+                    if(oDiv.className.indexOf("r") != -1) {
+                        //右 r
+                        oBox.style.width = oldW + disX + "px";
+                    }
+                    if(oDiv.className.indexOf("b")!=-1 ) {
+                        //下
+                        oBox.style.height = oldH + disY + "px";
+                    }
+                };
+
+                document.onmouseup = function(ev) {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    oDiv.releaseCapture && oDiv.releaseCapture();
+                };
+
+                oDiv.setCapture && oDiv.setCapture();
+                return false;
+            };
+        };
+
+    };
+</script>
+</head>
+<body>
+    <div id="box">
+        <div class="lt"></div>
+        <div class="rt"></div>
+        <div class="rb"></div>
+        <div class="lb"></div>
+        <div class="l"></div>
+        <div class="t"></div>
+        <div class="r"></div>
+        <div class="b"></div>
+    </div>
+</body>
+</html>
