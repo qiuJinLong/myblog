@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>列表效果2</title>
+<style type="text/css">
+*{margin:0; padding: 0; list-style: none;}
+#div1{ position: relative; width: 900px; height: 400px; margin: 30px auto; border:1px solid red;}
+    #div1 ul{ position: absolute; left: 0; top: 50%; width: 9000px; height: 180px; margin-top: -90px;}
+    #div1 ul li{ position: relative; float: left; width: 260px; height: 180px; padding: 10px;}
+    #div1 ul li{ position: relative; float: left; width: 260px; height: 180px; padding: 10px;}
+    #div1 ul li img{position: absolute; left: 0; top: 10px; width: 260px;}
+
+    #div1 ul li span{ position:absolute; left: 50%; top: 300px; margin-left: -50px; width: 100px; height: 50px; background: yellow;
+        text-align: center; line-height: 50px; font-size: 30px;}
+    #div1 .line{ position: absolute; left: 50%; top: 0; width: 1px; height: 400px; background: red; z-index: 100;}
+</style>
+<script type="text/javascript" src="../move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var oUl = oDiv.children[0];
+        var aLi = oUl.children;
+        var aImg = oDiv.getElementsByTagName("img");
+        var aSpan = oDiv.getElementsByTagName("span");
+        //算ul的宽度
+        oUl.style.width = aLi.length * aLi[0].offsetWidth + "px";
+
+        //拖拽ul
+        oUl.onmousedown = function(ev) {
+            var oEvent = ev || event;
+            var disX = oEvent.clientX - oUl.offsetLeft;
+
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                var l = oEvent.clientX - disX;
+                if(l > oDiv.offsetWidth/2-aLi[0].offsetWidth/2) {
+                    l = oDiv.offsetWidth/2-aLi[0].offsetWidth/2;
+                } else if(l < oDiv.offsetWidth/2-aLi[0].offsetWidth*(aLi.length-1 + 0.5)) {
+                    l = oDiv.offsetWidth/2-aLi[0].offsetWidth*(aLi.length-1 + 0.5);
+                }
+                oUl.style.left = l+"px";
+                setSize();
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oUl.releaseCapture && oUl.releaseCapture();
+            };
+
+            oUl.setCapture && oUl.setCapture();
+            return false;
+        };
+        setCenter(1)
+        function setCenter(n) {
+            oUl.style.left = oDiv.offsetWidth/2 - (n+0.5)*aLi[0].offsetWidth + "px";
+        }
+        setSize();
+        function setSize() {
+            for(var i=0; i<aLi.length; i++) {
+                var l = Math.abs(oDiv.offsetWidth/2 - (oUl.offsetLeft+aLi[i].offsetLeft+aLi[i].offsetWidth/2));
+                var scale = 1-l/500;
+                scale<0.5 && (scale=0.5);
+                aImg[i].style.width = 520*scale + "px";
+                aSpan[i].innerHTML = scale.toFixed(2);
+                aImg[i].style.zIndex = scale*10000;
+                aImg[i].style.marginLeft = -(aImg[i].offsetWidth-260)/2+"px";
+                aImg[i].style.marginTop = -(aImg[i].offsetHeight - 180)/2 + "px";
+                aImg[i].style.opacity = scale;
+                aImg[i].style.filter = "alpha(opacity:"+scale*100+")";
+            }
+        }
+
+
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li><img src="images/1.jpg" /><span></span></li>
+            <li><img src="images/2.jpg" /><span></span></li>
+            <li><img src="images/3.jpg" /><span></span></li>
+            <li><img src="images/4.jpg" /><span></span></li>
+            <li><img src="images/5.jpg" /><span></span></li>
+            <li><img src="images/6.jpg" /><span></span></li>
+            <li><img src="images/7.jpg" /><span></span></li>
+        </ul>
+        <div class="line"></div>
+    </div>
+</body>
+</html>

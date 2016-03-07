@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>列表效果</title>
+<style type="text/css">
+*{margin:0; padding: 0; list-style: none;}
+#div1{ position: relative; width: 900px; height: 400px; margin: 30px auto; border:1px solid red;}
+    #div1 ul{ position: absolute; left: 0; top: 50%; width: 9000px; height: 180px; margin-top: -90px;}
+    #div1 ul li{ position: relative; float: left; width: 260px; height: 180px; padding: 10px;}
+    #div1 ul li{ position: relative; float: left; width: 260px; height: 180px; padding: 10px;}
+    #div1 ul li img{position: absolute; left: 0; top: 10px; width: 260px;}
+
+    #div1 ul li span{ position:absolute; left: 50%; top: 300px; margin-left: -50px; width: 100px; height: 50px; background: yellow;
+        text-align: center; line-height: 50px; font-size: 30px;}
+    #div1 .line{ position: absolute; left: 50%; top: 0; width: 1px; height: 400px; background: red; z-index: 100;}
+</style>
+<script type="text/javascript" src="../move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var oUl = oDiv.getElementsByTagName("ul")[0];
+        var aLi = oUl.children;
+        var aSpan = oUl.getElementsByTagName("span");
+        var aImg = oUl.getElementsByTagName("img");
+        var zIndex = 2;
+        oUl.onmousedown = function(ev) {
+            var oEvent = ev || event;
+            var disX = oEvent.clientX - oUl.offsetLeft;
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                oUl.style.left = oEvent.clientX - disX + "px";
+                for(var i = 0; i<aLi.length; i++) {
+                    var l = Math.abs(oDiv.offsetWidth/2 - (oUl.offsetLeft + aLi[i].offsetWidth/2 + aLi[i].offsetLeft));
+                    var scale = 1-l/500; //l越大，scale越小
+                    aSpan[i].innerHTML = scale.toFixed(2);
+                    aImg[i].style.width = 520*scale + "px";
+                    aImg[i].style.zIndex = scale*1000;
+                    aImg[i].style.marginLeft = -(aImg[i].offsetWidth - 260)/2 + "px";
+                    aImg[i].style.marginTop = -(aImg[i].offsetHeight - 180)/2 + "px";
+                    aImg[i].style.opacity = scale;
+                    aImg[i].style.filter = "alpha(opacity"+scale*100+")";
+                }
+            };
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oUl.releaseCapture && oUl.releaseCapture();
+            };
+            oUl.setCapture && oUl.setCapture();
+            return false;
+        };
+    };
+</script>
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li><img src="images/1.jpg" /><span></span></li>
+            <li><img src="images/2.jpg" /><span></span></li>
+            <li><img src="images/3.jpg" /><span></span></li>
+            <li><img src="images/4.jpg" /><span></span></li>
+            <li><img src="images/5.jpg" /><span></span></li>
+            <li><img src="images/6.jpg" /><span></span></li>
+            <li><img src="images/7.jpg" /><span></span></li>
+        </ul>
+        <div class="line"></div>
+    </div>
+</body>
+</html>

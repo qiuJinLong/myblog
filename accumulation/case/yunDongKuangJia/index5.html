@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>手风琴</title>
+<style type="text/css">
+*{ margin: 0; padding: 0; list-style: none;}
+#div1{ position: relative; width: 800px; height: 305px; margin:30px auto; overflow: hidden;}
+#div1 div{ width: 840px; height: 305px; position: absolute; top: 0; left: 0;}
+div span{ position: absolute; left: 0; top: 0; height: 305px; line-height: 305px; width: 20px; text-align: center;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var aDiv = oDiv.children;
+
+        oDiv.style.width = 840 + 20*(aDiv.length-1)+"px";
+        for(var i=1; i<aDiv.length; i++) {
+            aDiv[i].style.left = 840 + 20*(i-1) + "px";
+        }
+
+        for(var i=0; i<aDiv.length; i++) {
+            (function(index) {
+                aDiv[index].onmouseover = function() {
+                    for(var i=0; i<aDiv.length; i++) {
+                        if(i<=index) {
+                            move(aDiv[i], {left:i*20});
+                        } else {
+                            move(aDiv[i], {left:840+(i-1)*20});
+                        }
+                    }
+                };
+            })(i);
+        }
+    };
+
+</script>
+</head>
+<body>
+    <div id="div1">
+        <div><img src="images/1-1.jpg" /><span style="background: red;">0</span> </div>
+        <div><img src="images/1-2.jpg" /><span style="background: green;">1</span> </div>
+        <div><img src="images/1-3.jpg" /><span style="background: yellow;">2</span> </div>
+        <div><img src="images/1-4.jpg" /><span style="background: pink;">3</span> </div>
+        <div><img src="images/1-1.jpg" /><span style="background: orange;">4</span> </div>
+        <div><img src="images/1-2.jpg" /><span style="background: blue;">5</span> </div>
+    </div>
+</body>
+</html>

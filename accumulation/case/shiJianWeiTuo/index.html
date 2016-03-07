@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>事件委托</title>
+<style type="text/css">
+    #ul1{width: 100%; list-style:none;}
+    #ul1 li{ float: left; width: 200px; height: 200px; margin: 10px; background: #ccc;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oUl = document.getElementById("ul1");
+        oUl.onclick = function(ev) {
+            var oEvent = ev || event;
+            //var oSrc = oEvent.srcElement; //ie8-   chrome
+            //var oSrc = oEvent.target; // 高级浏览器
+            var oSrc = oEvent.target || oEvent.srcElement;
+            oSrc.style.background = "red";
+        };
+    };
+</script>
+</head>
+<body>
+    <ul id="ul1">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

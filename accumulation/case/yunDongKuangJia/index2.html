@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无缝滚动</title>
+<style type="text/css">
+*{ margin: 0; padding: 0; list-style: none;}
+#div1{ position:relative;width:712px; height:108px; border:1px solid #000; background:red; margin:100px auto; overflow:hidden;}
+#ul1{ position:absolute;left:0;top:0;width:712px; height:108px;}
+#ul1 li{float:left;width:178px; height:108px;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oUl = document.getElementById("ul1");
+        oUl.innerHTML += oUl.innerHTML;
+        oUl.style.width = oUl.children[0].offsetWidth * oUl.children.length + "px";
+
+        var w = oUl.offsetWidth / 2,
+                step = -5,
+                left = 0;
+        setInterval(function() {
+            left+=step;
+            oUl.style.left = left%w + "px";
+        }, 30);
+
+
+
+    };
+
+</script>
+</head>
+<body>
+    <div id="div1">
+        <ul id="ul1">
+            <li><img src="images/1.jpg" width="178" height="108"></li>
+            <li><img src="images/2.jpg" width="178" height="108"></li>
+            <li><img src="images/3.jpg" width="178" height="108"></li>
+            <li><img src="images/4.jpg" width="178" height="108"></li>
+        </ul>
+    </div>
+</body>
+</html>

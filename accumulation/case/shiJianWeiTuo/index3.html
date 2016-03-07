@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>鼠标移入bug</title>
+<style type="text/css">
+    #div1{width: 200px; height: 200px; background: green;}
+    #div1 h2{ width: 200px; height: 30px; background: yellow;}
+</style>
+<script type="text/javascript">
+    /**
+     * oEvent.srcElement || oEvent.target  说的是触发这个事件的元素（如果冒泡，那么父元的click事件，可能是子元素触发的）
+     * 比如div中有个a标签，给div绑定了click事件。我们点击a标签，那么div的click事件会响应，
+     * 但是，div中oEvent.srcElement||oEvent.target得到的结果是a标签
+     * */
+    /**
+     * oEvent.fromElement(toElement)||oEvent.relatedTarget，说的是触发这个事件时，鼠标是从哪个元素进来的；
+     * toElement说的是鼠标从这个元素出去之后，是到了哪个元素的
+     * */
+
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        oDiv.onmouseover = function(ev) {
+            var oEvent = ev || event;
+            //fromElement: ie  chrome
+            //相关的目标  releatedTarget  高级浏览器
+            var oFrom = oEvent.fromElement || oEvent.relatedTarget;
+            if(oDiv.contains(oFrom)) {
+                return;
+            }
+            alert("移入");
+        };
+
+        oDiv.onmouseout = function(ev) {
+            var oEvent = ev || event;
+            //toElement : ie   chrome
+            //相关的目标 relatedTarget  高级浏览器
+            var oTo = oEvent.toElement || oEvent.relatedTarget;
+            if(oDiv.contains(oTo)) {
+                return;
+            }
+            alert("移出");
+        };
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1">
+        <h2>标题</h2>
+    </div>
+</body>
+</html>

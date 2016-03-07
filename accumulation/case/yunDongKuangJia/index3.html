@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>导航菜单</title>
+<style type="text/css">
+*{ margin: 0; padding: 0; list-style: none;}
+    #ul1{ width: 650px; margin: 30px auto;}
+    #ul1 li{ position: relative; width: 100px; height: 30px; line-height: 30px; float: left; border: 1px solid #ccc; text-align: center;}
+    #ul1 li span{ position: absolute; left: 0;bottom: 0; width: 100px; height: 0; background: #09C; z-index: -1;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var aLi = document.getElementsByTagName("li");
+        for(var i=0; i<aLi.length; i++) {
+            aLi[i].onmouseover = function() {
+                var oSpan = this.getElementsByTagName("span")[0];
+                move(oSpan, {height:30}, {duration:300});
+            };
+            aLi[i].onmouseout = function() {
+                var oSpan = this.getElementsByTagName("span")[0];
+                move(oSpan, {height:0}, {duration:300});
+            };
+
+        }
+
+    };
+
+</script>
+</head>
+<body>
+    <ul id="ul1">
+        <li>菜单1<span></span></li>
+        <li>菜单2<span></span></li>
+        <li>菜单3<span></span></li>
+        <li>菜单4<span></span></li>
+        <li>菜单5<span></span></li>
+        <li>菜单6<span></span></li>
+    </ul>
+</body>
+</html>

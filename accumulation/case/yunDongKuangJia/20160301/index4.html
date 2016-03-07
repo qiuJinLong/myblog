@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>小球运动</title>
+<style type="text/css">
+*{margin:0; padding: 0; list-style: none;}
+    #div1{ position: absolute; left: 200px; top: 50px; width: 300px; height: 300px; border: 1px solid #000; border-radius: 50%;}
+    #div1 span{ position: absolute; top: 0; left: 50%; margin-top: -15px; margin-left: -15px; width: 30px; height: 30px;
+    background: red; border-radius: 50%;}
+
+</style>
+<script type="text/javascript" src="../move.js"></script>
+<script type="text/javascript">
+    //360度 = 2PI弧度
+    //1度 = 2PI/360 = PI/180
+    //1弧度 = 180/PI
+    //sinA = b/R  cosA = a/R
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var R = oDiv.offsetWidth/2;
+        //创建
+        var N = 10;
+        for(var i=0; i<N; i++) {
+            var oSpan = document.createElement("span");
+            oDiv.appendChild(oSpan);
+        }
+        var aSpan = oDiv.children;
+        var bClick = false
+        document.onclick = function() {
+            bClick = !bClick;
+            if(bClick) {
+                for(var i=0;i<aSpan.length; i++) {
+                    move(aSpan[i], 360/aSpan.length*i);
+                }
+            } else {
+                for(var i=0; i<aSpan.length; i++) {
+                    move(aSpan[i], 0);
+                }
+            }
+        };
+
+        function move(obj, iTarget) {
+            var start = obj.alpha || 0 ;
+            var dis = iTarget - start;
+            var time = 1000;
+            var count = Math.round(time/30);
+            var n = 0;
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                n++;
+                var cur = start + dis*n/count;
+                var x = R+Math.sin(cur*Math.PI/180)*R;
+                var y = R-Math.cos(cur*Math.PI/180)*R;
+                obj.alpha = cur; //运动完成后，变成一个新的起点
+                obj.style.left = x+"px";
+                obj.style.top = y+"px";
+                if(n == count) {
+                    clearInterval(obj.timer);
+                }
+            }, 30);
+        }
+    };
+
+
+</script>
+</head>
+<body>
+    <div id="div1">
+
+    </div>
+</body>
+</html>

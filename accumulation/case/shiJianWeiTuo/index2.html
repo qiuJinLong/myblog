@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>事件委托2</title>
+<style type="text/css">
+    #ul1{width: 100%; list-style:none;}
+    #ul1 li{ float: left; width: 200px; height: 200px; margin: 10px; background: #ccc;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oUl = document.getElementById("ul1");
+        oUl.onclick = function(ev) {
+            var oEvent = ev || event;
+            var oSrc = oEvent.target || oEvent.srcElement;
+            console.log(oEvent);
+            if(oSrc.tagName.toLowerCase() == "li") {
+                var oA = oSrc.children[0];
+                console.log(oA);
+                if(oA.tagName.toLowerCase() == "a") {
+                    oSrc.style.background = "red";
+                }
+            }
+
+            if(oSrc.tagName.toLowerCase() == "a") {
+                var oLi = oSrc.parentNode;
+                if(oLi.className == "active") {
+                    oLi.style.background = "red";
+                }
+            }
+
+        };
+    };
+</script>
+</head>
+<body>
+    <ul id="ul1">
+        <li class="active"><a href="javascript:;">aaaaaa</a> </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

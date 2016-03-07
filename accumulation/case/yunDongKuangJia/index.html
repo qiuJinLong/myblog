@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>运动框架</title>
+<style type="text/css">
+    #div1{ position: absolute; left: 100px; top: 0; width: 200px; background: red;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        oDiv.onclick = function() {
+            move(this, {height:500}, {easing:"ease-out", duration:1000});
+        };
+    };
+
+
+    /*function test() {
+        this.elements = [];
+        this.elements.push(this);
+    }
+    test.prototype = {
+        a: function() {
+            alert("a");
+            String.prototype.b = test.prototype.b;
+            String.prototype.curThis = this.elements;
+            var strObj = new String("abcdsfd");
+            return strObj;
+        },
+        b: function() {
+            alert("b");
+            if(this.curThis) {
+                return this.curThis[0];
+            } else {
+                return this.elements[0];
+            }
+        },
+        c : function() {
+            alert("c");
+            return this.elements[0];
+        }
+    }
+    var myTest = new test();
+    myTest.a().b().c();*/
+</script>
+</head>
+<body>
+    <div id="div1" style="height: 200px;"></div>
+</body>
+</html>

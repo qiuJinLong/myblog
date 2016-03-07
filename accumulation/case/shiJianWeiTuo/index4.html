@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>事件委托例子</title>
+<style type="text/css">
+    div{ position: absolute; left: 0; top: 0; width: 200px; height: 200px; background: #ccc;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var maxWidth = document.documentElement.clientWidth - 200;
+        var maxHeight = document.documentElement.clientHeight - 200;
+
+        var N = 100;
+        for(var i=0; i<N; i++) {
+            var oDiv = document.createElement("div");
+            document.body.appendChild(oDiv);
+            var r = parseInt(Math.random()*256);
+            var g = parseInt(Math.random()*256);
+            var b = parseInt(Math.random()*256);
+            oDiv.style.background = "rgb("+r+","+g+","+b+")";
+            oDiv.style.left = Math.random()*maxWidth+"px";
+            oDiv.style.top = Math.random()*maxHeight+"px";
+        }
+
+        document.onmousedown = function(ev) {
+            var oEvent = ev || event;
+            var oSrc = oEvent.srcElement || oEvent.target;
+            console.log(oSrc);
+            if(oSrc.tagName.toLowerCase() != "div") return false;
+            var disX = oEvent.clientX - oSrc.offsetLeft;
+            var disY = oEvent.clientY - oSrc.offsetTop;
+
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                oSrc.style.left = oEvent.clientX - disX + "px";
+                oSrc.style.top = oEvent.clientY - disY + "px";
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                oSrc.releaseCapture && oSrc.releaseCapture();
+            };
+
+            oSrc.setCapture && oSrc.setCapture();
+            return false;
+        };
+
+    };
+</script>
+</head>
+<body>
+
+</body>
+</html>
