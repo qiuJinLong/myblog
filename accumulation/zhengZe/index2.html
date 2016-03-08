@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>正则表达式-找位置,过滤敏感词</title>
+<style type="text/css">
+*{ margin: 0;padding: 0; list-style: none;}
+
+</style>
+<script type="text/javascript">
+    /*var str='Width';
+    alert(str.toLowerCase().indexOf('w'));
+
+    var str = "idWth";
+    var reg = new RegExp("w");
+    alert(str.search(reg));
+
+    var str = "idWth";
+    var reg = new RegExp("w", "i");
+    alert(str.search(reg));
+
+    var str = 'a2bc5asdf 3214 5sd';
+    var reg = /\d/;
+    alert(str.search(reg));*/
+
+    var str = "智能社是一家专注于web前端开发技术的公司，目前主要提供JavaScript培训和HTML5两项服务，同时还推出了大量JavaScript基础知识教程，智能课堂为你带来全新的学习方法和快乐的学习体验。";
+    var reg = /服务|快乐的学习体验|智能社/g;
+    document.write(str.replace(reg, function(s) {
+        var tmp = "";
+        for(var i=0; i< s.length; i++) {
+            tmp+="*";
+        }
+        return '<span style="color:red;">'+tmp+'</span>';
+    }));
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

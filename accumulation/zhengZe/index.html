@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>正则表达式-筛选数字,格式整理</title>
+<style type="text/css">
+*{ margin: 0;padding: 0; list-style: none;}
+
+</style>
+<script type="text/javascript">
+    /*var str = "abc12 t45 asd89 105 ads 234 asd 90";
+    var arr = [],
+            tmp = "";
+    for(var i=0; i<str.length; i++) {
+        if(str.charAt(i)>="0" && str.charAt(i)<=9) {
+            tmp+=str.charAt(i);
+        } else {
+            if(tmp) {
+                arr.push(tmp);
+                tmp="";
+            }
+        }
+    }
+    if(tmp) {
+        arr.push(tmp);
+        tmp="";
+    }
+    alert(arr);*/
+
+    /*var str = "abc12 t45 asd89 105 ads 234 asd 90";
+    alert(str.match(/\d+/g));*/
+    window.onload = function() {
+
+        /*^  如果不加m， 整个字符串的开头
+        ^  配合m来用， 识别出来字符串换行*/
+
+        /*var oT=document.getElementById('t1');
+         var oBtn=document.getElementById('btn1');
+         var oT2=document.getElementById('t2');
+
+         oBtn.onclick=function(){
+         oT2.value=oT.value.replace(/^/gm,'  ');
+         };*/
+
+        /*var oT=document.getElementById('t1');
+        var oBtn=document.getElementById('btn1');
+        var oT2=document.getElementById('t2');
+
+        oBtn.onclick=function(){
+            oT2.value=oT.value.replace(/^/gm,'  ^_^');
+        };*/
+
+        /*var oT=document.getElementById('t1');
+        var oBtn=document.getElementById('btn1');
+        var oT2=document.getElementById('t2');
+
+        oBtn.onclick=function(){
+            oT2.value=oT.value.replace(/$/gm,'-_-');
+        };*/
+    };
+
+
+</script>
+</head>
+<body>
+<textarea id="t1" rows="10" cols="40"></textarea><br>
+<input type="button" value="整理" id="btn1"><br>
+<textarea id="t2" rows="10" cols="40"></textarea><br>
+</body>
+</html>

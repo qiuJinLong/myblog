@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>正则表达式-过滤html标签</title>
+<style type="text/css">
+*{ margin: 0;padding: 0; list-style: none;}
+#div1{ width: 100px; height: 100px; background: red;}
+</style>
+<script type="text/javascript">
+    var str = '<div><h3>我是标题3</h3></div>';
+    console.log(str.replace(/<.+>/g, ""));
+    console.log(str.replace(/<[^>]+>/g, ""));
+
+    //批量加事件
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+//        oDiv.onmouseover = oDiv.onclick = oDiv.onmouseout = function() {
+//            alert(1);
+//        };
+        "onmouseover onclick onmouseout oncontextmenu".replace(/\w+/g, function(s) {
+            oDiv[s] = function() {
+                alert(1);
+            };
+        });
+
+    };
+
+    //替换成灯亮星
+    var str='智能社是一家专注于web前端开发技术的公司，目前主要提供JavaScript培训和HTML5培训两项服务，同时还推出了大量javascript基础知识教程，智能课堂为你带来全新的学习方法和快乐的学习体验。';
+    var reg=/智能社|智能课堂/g;
+//    document.write(str.replace(reg, function(s) {
+//        var tmp = "";
+//        for(var i=0; i< s.length; i++) {
+//            tmp+="*";
+//        }
+//        return tmp;
+//    }));
+    document.write(str.replace(reg, function(s) {
+        return s.replace(/./g, "*");
+    }));
+
+
+    //首字母大写
+    var str = "nice to meet you";
+    document.write(str.replace(/\w+/g, function() {
+        return s.charAt(0).toUpperCase()+ s.substring(1);
+    }));
+
+    //removeClass
+    var className = "on active active active active active red";
+    var sClass = "active";
+    var reg = new RegExp("\\b"+sClass+"\\b");
+    console.log(className.replace(reg, "").replace(/^\s+|\s+$/g, "").replace(/\s+/, " "));
+
+    //校验url
+    var reg=/^(https?:\/\/)?([a-z0-9-]+\.)*[a-z0-9-]+(\.[a-z]{2,6}){1,2}\/?$/;
+
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
