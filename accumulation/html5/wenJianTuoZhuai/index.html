@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>文件拖拽</title>
+<style type="text/css">
+*{ margin:0; padding: 0; list-style: none;}
+#div1{ width: 300px; height: 300px; position: absolute; left: 50%; top: 50%; margin: -150px 0 0 -150px; border:1px dashed #000;
+    text-align: center; line-height: 300px; display: none;
+}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+        var timer = null;
+        document.ondragover = function() {
+            clearInterval(timer);
+            oDiv.style.display="block";
+            console.log("1");
+            timer = setTimeout(function() {
+                oDiv.style.display = "none";
+            }, 100);
+        };
+
+        oDiv.ondragenter = function() {
+            oDiv.innerHTML = "释放鼠标";
+        };
+
+        oDiv.ondragleave = function() {
+            oDiv.innerHTML = "将文件拖到此区域...";
+        };
+
+        oDiv.ondragover = function() {
+            return false;
+        };
+
+        oDiv.ondrop = function(ev) {
+            var aFile = ev.dataTransfer.files;
+            var str = "";
+            for(var i=0; i<aFile.length; i++) {
+                str+="文件名称："+aFile[i].name+"\n"+
+                        "文件大小："+aFile[i].size+"\n"+
+                        "文件类型："+aFile[i].type+"\n"+
+                        "最后修改日期："+aFile[i].lastModifiedDate+"\n"+
+                                "====================\n";
+            }
+            alert(str);
+            /*alert("文件名称："+oFile.name+"\n"+
+            "文件大小："+oFile.size+"\n"+
+            "文件类型："+oFile.type+"\n"+
+            "最后修改日期："+oFile.lastModifiedDate);*/
+            return false;
+        };
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1">将文件拖到此区域！</div>
+</body>
+</html>

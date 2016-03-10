@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>文件拖拽</title>
+<style type="text/css">
+*{ margin:0; padding: 0; list-style: none;}
+
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var aInput = document.getElementsByTagName("input");
+        aInput[0].onchange = aInput[1].onchange=aInput[2].onchange = function() {
+            var oFile = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById("t1").value = reader.result;
+            };
+
+            reader[this.name](oFile);
+        };
+    };
+</script>
+</head>
+<body>
+    readAsText:<input type="file" name="readAsText" /><br />
+    readAsDataURL:<input type="file" name="readAsDataURL" /><br />
+    readAsBinaryString:<input type="file" name="readAsBinaryString" /><br />
+    <textarea id="t1" rows="10" cols="40"></textarea>
+</body>
+</html>

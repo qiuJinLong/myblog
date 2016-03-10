@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>简易钢琴</title>
+    <style type="text/css">
+        *{ margin:0; padding: 0; list-style: none;}
+        ul li{ width: 12.5%; height: 300px; border: 1px solid #000; float: left; box-sizing: border-box;
+            text-align: center; line-height: 300px; font-size: 30px;}
+        ul li.on{ background: #ccc;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var oA = new Audio();
+            var aLi = document.querySelectorAll("ul li");
+            var keyCode = 0;
+            document.onkeydown = function(ev) {
+                keyCode = ev.keyCode;
+                for(var i=0; i<aLi.length; i++) {
+                    aLi[i].className = "";
+                }
+                switch (keyCode) {
+                    case 49:
+                        aLi[0].className = "on";
+                        oA.src="ogg/1.ogg";
+                        oA.play();
+                        break;
+                    case 50:
+                        aLi[1].className = "on";
+                        oA.src="ogg/2.ogg";
+                        oA.play();
+                        break;
+                    case 51:
+                        aLi[2].className = "on";
+                        oA.src="ogg/3.ogg";
+                        oA.play();
+                        break;
+                    case 52:
+                        aLi[3].className = "on";
+                        oA.src="ogg/4.ogg";
+                        oA.play();
+                        break;
+                    case 53:
+                        aLi[4].className = "on";
+                        oA.src="ogg/5.ogg";
+                        oA.play();
+                        break;
+                    case 54:
+                        aLi[5].className = "on";
+                        oA.src="ogg/6.ogg";
+                        oA.play();
+                        break;
+                    case 55:
+                        aLi[6].className = "on";
+                        oA.src="ogg/7.ogg";
+                        oA.play();
+                        break;
+                    case 56:
+                        aLi[7].className = "on";
+                        oA.src="ogg/8.ogg";
+                        oA.play();
+                        break;
+                    case 97:
+                        aLi[0].className = "on";
+                        oA.src="ogg/1.ogg";
+                        oA.play();
+                        break;
+                    case 98:
+                        aLi[1].className = "on";
+                        oA.src="ogg/2.ogg";
+                        oA.play();
+                        break;
+                    case 99:
+                        aLi[2].className = "on";
+                        oA.src="ogg/3.ogg";
+                        oA.play();
+                        break;
+                    case 100:
+                        aLi[3].className = "on";
+                        oA.src="ogg/4.ogg";
+                        oA.play();
+                        break;
+                    case 101:
+                        aLi[4].className = "on";
+                        oA.src="ogg/5.ogg";
+                        oA.play();
+                        oA.play();
+                        break;
+                    case 102:
+                        aLi[5].className = "on";
+                        oA.src="ogg/6.ogg";
+                        oA.play();
+                        break;
+                    case 103:
+                        aLi[6].className = "on";
+                        oA.src="ogg/7.ogg";
+                        oA.play();
+                        break;
+                    case 104:
+                        aLi[7].className = "on";
+                        oA.src="ogg/8.ogg";
+                        oA.play();
+                        break;
+                    default :
+                        break;
+                }
+            };
+
+
+            for(var i=0; i<aLi.length; i++) {
+                aLi[i].onclick = function() {
+                    for(var i=0; i<aLi.length; i++) {
+                        aLi[i].className = "";
+                    }
+                    this.className = "on";
+                    oA.src="ogg/"+this.innerHTML+".ogg";
+                    oA.play();
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+</ul>
+</body>
+</html>
