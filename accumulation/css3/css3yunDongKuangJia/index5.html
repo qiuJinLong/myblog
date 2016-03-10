@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>手机桌面2</title>
+<meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1.0">
+<style type="text/css">
+    *{ margin: 0; padding: 0; list-style: none;}
+    ul{ width:306px; margin:0 auto;}
+    ul li{ margin:10px; width:80px; border:1px solid #000; text-align:center; line-height:80px; background:#ccc; border-radius:5px; float:left; height:80px;}
+    .box{ box-shadow:0 0 5px #f60;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded',function(){
+        var aLi=document.querySelectorAll('li');
+
+        var zIndex=1000;
+
+        //布局转化
+        var aPos=[];
+        for(var i=0; i<aLi.length; i++){
+            aPos[i]={left:aLi[i].offsetLeft, top:aLi[i].offsetTop};
+        }
+        for(var i=0; i<aLi.length; i++){
+            aLi[i].style.left=aPos[i].left+'px';
+            aLi[i].style.top=aPos[i].top+'px';
+            aLi[i].style.position='absolute';
+            aLi[i].style.margin=0;
+        }
+
+
+        //拖拽
+        for(var i=0; i<aLi.length; i++){
+            drag(aLi[i]);
+            aLi[i].index=i;
+        }
+
+        function drag(obj){
+            obj.addEventListener('touchstart',function(ev){
+                var disX=ev.targetTouches[0].pageX-obj.offsetLeft;
+                var disY=ev.targetTouches[0].pageY-obj.offsetTop;
+
+                obj.style.zIndex=zIndex++;
+                function fnMove(ev){
+                    obj.style.left=ev.targetTouches[0].pageX-disX+'px';
+                    obj.style.top=ev.targetTouches[0].pageY-disY+'px';
+
+                    var oNear=findNearest(obj);
+                    if(oNear){
+                        var n=obj.index;
+                        var m=oNear.index;
+                        if(n<m){
+                            for(var i=0; i<aLi.length; i++){
+                                if(aLi[i].index>=n+1 && aLi[i].index<=m){
+                                    aLi[i].index--;
+                                    move(aLi[i],{left:aPos[aLi[i].index].left+'px',top:aPos[aLi[i].index].top+'px'});
+                                }
+
+                            }
+                            obj.index=m;
+                        }else{
+                            for(var i=0; i<aLi.length; i++){
+                                if(aLi[i].index>=m && aLi[i].index<=n-1){
+                                    aLi[i].index++;
+                                    move(aLi[i],{left:aPos[aLi[i].index].left+'px',top:aPos[aLi[i].index].top+'px'});
+                                }
+
+                            }
+                            obj.index=m;
+                        }
+                    }
+                }
+
+                function fnEnd(){
+                    document.removeEventListener('touchmove',fnMove,false);
+                    document.removeEventListener('touchend',fnEnd,false);
+
+                    move(obj,{left:aPos[obj.index].left+'px', top:aPos[obj.index].top+'px'});
+                }
+                document.addEventListener('touchmove',fnMove,false);
+                document.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            },false);
+        }
+
+        function findNearest(obj){
+            var iMin=new Date().getTime();
+            var iMinIndex=-1;
+            for(var i=0; i<aLi.length; i++){
+                //if(obj==aLi[i])continue;//?
+                if(collTest(obj,aLi[i])){
+                    var dis=getDis(obj,aLi[i]);
+                    if(dis<iMin){
+                        iMin=dis;
+                        iMinIndex=i;
+                    }
+                }
+            }
+            if(iMinIndex==-1){
+                return null;
+            }else{
+                return aLi[iMinIndex];
+            }
+        }
+
+        function collTest(obj,obj2){
+            var l1=obj.offsetLeft;
+            var r1=obj.offsetLeft+obj.offsetWidth;
+            var t1=obj.offsetTop;
+            var b1=obj.offsetTop+obj.offsetHeight;
+
+            var l2=aPos[obj2.index].left;
+            var r2=aPos[obj2.index].left+obj2.offsetWidth;
+            var t2=aPos[obj2.index].top;
+            var b2=aPos[obj2.index].top+obj2.offsetHeight;
+
+            if(r1<l2 || l1>r2 || b1<t2 || t1>b2){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        function getDis(obj,obj2){
+            var a=obj.offsetLeft-aPos[obj2.index].left;
+            var b=obj.offsetTop-aPos[obj2.index].top;
+            return Math.sqrt(a*a+b*b);
+        }
+    },false);
+</script>
+</head>
+<body>
+<ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+</ul>
+</body>
+</html>

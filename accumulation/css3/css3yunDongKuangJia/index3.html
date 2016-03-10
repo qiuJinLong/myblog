@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>css3运动框架</title>
+<style type="text/css">
+    #div1{ width: 100px; height: 100px; background: red; position:absolute; left: 0; top: 0;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1");
+
+        oDiv.onclick = function() {
+//            move(oDiv, {width:"300px", height:"300px"}, {time:3000, end:function() {
+//                move(oDiv, {left:"300px"});
+//            }});
+            move(this, {width:"300px", height:"300px"}, {time:3000, end:function() {
+                move(this, {left:"300px"});
+            }});
+        };
+
+        function move(obj, json, options) {
+            options = options || {};
+            options.time = options.time || 700;
+            options.type = options.type || "ease";
+            obj.style.transition = options.time +"ms all " + options.type;
+            for(var name in json) {
+                obj.style[name]=json[name];
+            }
+            function tEnd() {
+                obj.removeEventListener("webkitTransitionEnd", tEnd, false);
+//                options.end && options.end();
+                options.end && options.end.call(obj);
+            }
+            obj.addEventListener("webkitTransitionEnd", tEnd, false);
+        }
+
+
+    };
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
