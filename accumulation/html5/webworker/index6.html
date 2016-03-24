@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>webworker-斐波那契数列</title>
+<style type="text/css">
+    *{ margin: 0; padding: 0; list-style: none;}
+</style>
+<script type="text/javascript">
+    //webworker必须在服务器端的环境下才能运行
+    function fn(n) {
+        if(n<=2) {
+            return 1;
+        } else {
+            return fn(n-1)+fn(n-2);
+        }
+    }
+    alert(fn(42));
+</script>
+</head>
+<body>
+这个是没有使用webworker的，在计算数的时候，就不能点击button。加这个input是为了演示，webworker工作的时候，不影响主线程的那些东西，所以这个input是可以点击的。<br />
+<input type="button" value="0" onclick="this.value=parseInt(this.value)+1"><br />
+多线程：webWorker同时进行多个操作，充分利用cpu资源<br />
+单线程：js是单线程<br />
+前一个操作没有做完，后一个没法开始<br />
+单线程的问题：卡，阻塞<br />
+没法充分利用CPU资源<br />
+主线程：页面，html，js，css<br />
+子线程：new Worker();<br />
+==============================================<br />
+子线程：非常复杂的运算<br />
+主线程给子线程的东西，都是复制过去，为了安全<br />
+问题：性能<br />
+DOM、BOM<br />
+引用：<br />
+斐波那契数列：递归<br />
+慢在重复计算<br />
+* 子线程里面不能再new Worker()<br />
+*  webWorker 不能跨域<br />
+====================================================<br />
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>手机端单点拖拽</title>
+<meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1">
+<style type="text/css">
+    *{margin: 0; padding: 0; list-style: none;}
+    #myd{ width: 500px; height: 500px; word-break: break-word;}
+    #div1{ width: 100px; height: 100px; background: red; position: absolute; left: 0; top: 0;}
+    #div2{ width: 100px; height: 100px; background: blue; position: absolute; right: 0; top: 0;}
+</style>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var oDiv = document.getElementById("div1");
+        var oDiv2 = document.getElementById("div2");
+        var oMyd = document.getElementById("myd");
+        var ls = 1;
+        function drag(oDiv) {
+            oDiv.addEventListener("touchstart", function(ev) {
+                var disX = ev.targetTouches[0].pageX - oDiv.offsetLeft;
+                var disY = ev.targetTouches[0].pageY - oDiv.offsetTop;
+                var id = ev.targetTouches[0].identifier;
+//                oMyd.innerHTML += id + " : ";
+//                for(var i=0; i<ev.targetTouches.length; i++) {
+//                    oMyd.innerHTML += ls++ + "**" + ev.targetTouches[i].identifier + " : ";
+//                }
+                function fnMove(ev) {
+//                    oMyd.innerHTML += oDiv.getAttribute("type")+":";
+                    oMyd.innerHTML += oDiv.getAttribute("type")+":";
+                    if(ev.targetTouches[0].identifier == id) {
+                        oDiv.style.left = ev.targetTouches[0].pageX - disX+"px";
+                        oDiv.style.top = ev.targetTouches[0].pageY-disY+"px";
+                    }
+                }
+                function fnEnd(ev) {
+                    document.removeEventListener("touchmove", fnMove, false);
+                    document.removeEventListener("touchend", fnEnd, false);
+                }
+                document.addEventListener("touchmove", fnMove, false);
+                document.addEventListener("touchend", fnEnd, false);
+                ev.preventDefault();
+            }, false);
+        }
+        drag(oDiv);
+        drag(oDiv2);
+    }, false);
+</script>
+</head>
+<body>
+    <div id="myd"></div>
+    <div id="div1" type="11"></div>
+    <div id="div2" type="22"></div>
+</body>
+</html>

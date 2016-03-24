@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>平移</title>
+<meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1">
+<style type="text/css">
+    *{margin: 0; padding: 0; list-style: none;}
+    #div1{ width: 200px; height: 200px; position: absolute; left: 50%; top: 50%; margin: -100px 0 0 -100px;
+    background: red;}
+    #myd{ width: 500px; height: 500px; word-break: break-word;}
+</style>
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var oDiv = document.getElementById("div1");
+        var divX = 0;
+        var divY = 0;
+
+        oDiv.addEventListener("touchstart", function(ev) {
+            var lastX = divX;
+            var lastY = divY;
+
+            function getT(ev) {
+                var x1 = ev.targetTouches[0].pageX;
+                var y1 = ev.targetTouches[0].pageY;
+                var x2 = ev.targetTouches[1].pageX;
+                var y2 = ev.targetTouches[1].pageY;
+                var x = (x1+x2)/2;
+                var y = (y1+y2)/2;
+                return {x:x, y:y};
+            }
+
+            if(ev.targetTouches.length == 2) {
+                var x = getT(ev).x;
+                var y = getT(ev).y;
+            }
+
+            function fnMove(ev) {
+                if(ev.targetTouches.length == 2) {
+                    divX = lastX+getT(ev).x - x;
+                    divY = lastY + getT(ev).y - y;
+                    oDiv.style.WebkitTransform = "translate("+divX+"px,"+divY+"px)";
+                }
+            }
+
+            function fnEnd(ev) {
+
+            }
+
+
+        }, false);
+
+    }, false);
+</script>
+</head>
+<body>
+    <div id="myd"></div>
+    <div id="div1"></div>
+</body>
+</html>
