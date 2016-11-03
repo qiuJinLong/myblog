@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网易严选</title>
+<style type="text/css">
+    *{margin: 0; padding: 0; list-style: none;}
+    #div1{ position: relative; width:400px; height: 300px; margin: 30px auto;  border: 1px solid #000;}
+    ul{ position: absolute; width: 2000px; height: 300px; top: 0; left: 0 }
+    ul li{ height: 300px; width: 400px; float: left;}
+    #div1 ol{ position:absolute;left:50%;margin-left:-100px; bottom:30px;width:220px;}
+    #div1 ol li{float:left;width:40px;height:20px; background:#fff; margin-right:4px;}
+    #div1 ol li span{display:block;width:0;/*width:40px;*/height:20px; background:blue;}
+</style>
+<script type="text/javascript" src="move3.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.getElementById("div1"),
+                oUl = oDiv.getElementsByTagName("ul")[0],
+                aLi = oUl.getElementsByTagName("li"),
+                aSpan = oDiv.getElementsByTagName("span"),
+                iNow = 0,
+                pause = false;
+
+        next();
+
+        function next() {
+            move(aSpan[iNow], {"width":40}, {
+                "duration":2000,
+                "complete": function() {
+                    iNow++;
+                    if(iNow == aSpan.length) {
+                        iNow =0;
+                    }
+                    move(oUl, {"left":-aLi[0].offsetWidth*iNow+1}, {
+                        duration:1000,
+                        complete: function() {
+                            for(var i=0; i<aSpan.length; i++) {
+                                aSpan[i].style.width = 0;
+                            }
+                            if(!pause) {
+                                next();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        oDiv.onmouseover = function() {
+            clearInterval(aSpan[iNow].timer);
+            aSpan[iNow].style.width=0;
+            pause = true;
+        };
+
+        oDiv.onmouseout = function() {
+            pause = false;
+            next();
+        };
+
+    };
+
+</script>
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li style="background:#0CF"></li>
+            <li style="background:#C0F"></li>
+            <li style="background:#F0C"></li>
+            <li style="background:#0FC"></li>
+            <li style="background:#09C"></li>
+        </ul>
+        <ol>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+        </ol>
+    </div>
+</body>
+</html>
