@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>css3拖拽</title>
+<style type="text/css">
+    #div1{width: 200px; height: 200px; background: red; opacity: 0.6; position: absolute; top: 0; left: 0;}
+</style>
+<script type="text/javascript">
+    window.onload = function() {
+        var oDiv = document.querySelector("#div1");
+        var tX = 0,
+                tY = 0;
+        oDiv.onmousedown = function(e) {
+            var disX = e.clientX - tX;
+            var disY = e.clientY - tY;
+            oDiv.onmousemove = function(e) {
+                tX = e.clientX-disX;
+                tY = e.clientY-disY;
+                oDiv.style.transform = "translate("+tX+"px ,"+tY+"px)";
+            };
+            oDiv.onmouseup = function(ev) {
+                oDiv.onmousemove = null;
+                oDiv.onmouseup = null;
+            }
+        };
+        return false;
+    };
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>手机淘宝 by 智能社 HTML5 Demo</title>
+<link href="style/common.css" type="text/css" rel="stylesheet" />
+<meta id="viewport" name="viewport" content="width=320, initial-scale=1.0, user-scalable=0"/>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+	var oUl=document.querySelector('.banner .ul');
+	var aLi=oUl.children;
+	var aSpan=document.querySelectorAll('.number span');
+	
+	var iNow=0;
+	
+	oUl.addEventListener('touchstart',function(ev){
+		var downX=ev.targetTouches[0].pageX;
+		var disX=downX-oUl.offsetLeft;
+		
+		function fnMove(ev){
+			oUl.style.left=ev.targetTouches[0].pageX-disX+'px';
+		}
+		
+		function fnEnd(ev){
+			oUl.removeEventListener('touchmove',fnMove,false);
+			oUl.removeEventListener('touchend',fnEnd,false);
+			
+			oUl.style.WebkitTransition='0.5s all ease';
+			
+			var endX=ev.changedTouches[0].pageX;
+			
+			//恶心手段
+			
+			/*setTimeout(function(){
+				oUl.style.WebkitTransition='none';
+				for(var i=0; i<aSpan.length; i++){
+					aSpan[i].className='';
+				}
+				aSpan[iNow].className='acitve';
+			},500);*/
+			function fnEnd2(){
+				oUl.style.WebkitTransition='none';
+				for(var i=0; i<aSpan.length; i++){
+					aSpan[i].className='';
+				}
+				aSpan[iNow].className='acitve';
+				oUl.removeEventListener('webkitTransitionEnd',fnEnd2,false);	
+			}
+			oUl.addEventListener('webkitTransitionEnd',fnEnd2,false);
+			
+			if(Math.abs(endX-downX)<50){
+				oUl.style.left=-iNow*aLi[0].offsetWidth+'px';	
+			}else{
+				if(endX<downX){  //++
+					iNow++;
+					if(iNow==aLi.length)iNow=aLi.length-1;
+					oUl.style.left=-iNow*aLi[0].offsetWidth+'px';	
+				}else{ //--
+					iNow--;
+					if(iNow==-1)iNow=0;
+					oUl.style.left=-iNow*aLi[0].offsetWidth+'px';	
+				}
+				console.log(iNow);
+			}
+		}
+		
+		oUl.addEventListener('touchmove',fnMove,false);
+		oUl.addEventListener('touchend',fnEnd,false);
+		ev.preventDefault();
+	},false);
+},false);
+</script>
+</head>
+
+<body>
+<div class="box">
+	<div class="banner">
+    	<ul class="ul">
+        	<li><img src="img/tchd.jpg" alt="zns" /></li>
+        	<li><img src="img/testnew.jpg" alt="zns" /></li>
+        	<li><img src="img/triph5.m.taobao.jpg" alt="zns" /></li>
+        </ul>
+        <div class="number">
+            <span class="acitve"></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <section class="section">
+    	<h1><img src="data:image/png;base64,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" /><span></span></h1>
+        <div class="select"><input type="text" value="" /><input type="button" value="搜索" /></div>
+    </section>
+    <div class="listNav">
+    	<div class="navLinks">
+        	<a href="http://www.zhinengshe.com/" target="_blank"><img src="img/cai.png" /><br><span>彩票</span></a>
+            <a href="http://www.zhinengshe.com/" target="_blank"><img src="img/ccc.png" /><br><span>测试</span></a>
+            <a href="http://www.zhinengshe.com/" target="_blank"><img src="img/dd.png" /><br><span>拇指斗价</span></a>
+            <a href="#"><img src="img/tt.png" /><br><span>淘天下</span></a>
+            <a href="#"><img src="img/ju.png" /><br><span>聚划算</span></a>
+            <a href="#"><img src="img/sj.png" /><br><span>手机</span></a>
+            <a href="#"><img src="img/take_coin.png" /><br><span>信用卡</span></a>
+            <a href="#"><img src="img/ccc.png" /><br><span>实验</span></a>
+            <a href="#"><img src="img/take_coin.png" /><br><span>信用卡</span></a>
+            <a href="#"><img src="img/sj.png" /><br><span>手机</span></a>
+            <a href="#"><img src="img/ju.png" /><br><span>聚划算</span></a>
+            <a href="#"><img src="img/cai.png" /><br><span>彩票</span></a>
+            <a href="#"><img src="img/ccc.png" /><br><span>测试</span></a>
+            <a href="#"><img src="img/dd.png" /><br><span>拇指斗价</span></a>
+            <a href="#"><img src="img/tt.png" /><br><span>淘天下</span></a>
+            
+        </div>
+    </div>
+    <div class="module">
+    	<section class="item">
+            <div class="m_left mR_2">
+                <a href="#">
+                	<strong>逛有爱</strong>
+                    <span>初秋女装精选</span>
+                </a>
+                <div class="arrow">&gt;</div>
+            </div>
+            <div class="m_right">
+                <a href="#"><img src="img/img_01.jpg" alt="" /></a>
+                <p>小开衫+连衣裙 秋季最美搭</p>
+            </div>
+        </section>
+        <p class="comTag"><a href="#">秋装</a><a href="#" class="active">长袖连衣裙</a><a class="tag-red" href="#">小短靴</a><a href="#">修身西装</a><a href="#">新款包</a> </p>
+    </div>
+    
+    <div class="module">
+    	<section class="item">
+        	<div class="m_right mR_2">
+                <a href="#"><img src="img/img_02.jpg" alt="" /></a>
+                <p>小开衫+连衣裙 秋季最美搭</p>
+            </div>
+            <div class="m_left bg_f99">
+                <a href="#">
+                	<strong>女人街</strong>
+                    <span>潜规则你的心</span>
+                </a>
+                <div class="arrow">&gt;</div>
+            </div>
+            
+        </section>
+        <ul class="linkList">
+        	<li><a href="#">店铺街</a></li>
+        	<li><a href="#">人气单品</a></li>
+        	<li><a href="#">潮流荐</a></li>
+        </ul>
+        <p class="comTag"><a href="#">洁面</a><a href="#" class="active">初秋连衣裙</a><a class="tag-red" href="#">雪纺衫</a><a href="#">T恤</a><a href="#">小开衫</a><a href="#">秋季补水</a><a href="#">牛仔裤</a><a href="#">小背心</a><a href="#">卫衣</a><a href="#">休闲裤</a></p>
+    </div>
+
+    <div class="module">
+    	<section class="item">
+            <div class="m_left mR_2 bg_333">
+                <a href="#">
+                	<strong>男人帮</strong>
+                    <span>清爽入秋美少年</span>
+                </a>
+                <div class="arrow">&gt;</div>
+            </div>
+            <div class="m_right">
+                <a href="#"><img src="img/img_03.jpg" alt="" /></a>
+                <p>小开衫+连衣裙 秋季最美搭</p>
+            </div>
+        </section>
+        <p class="comTag"><a href="#">齐B小短裤</a><a href="#">初秋连衣裙</a><a href="#">雪纺衫</a><a href="#">T恤</a><a href="#">小开衫</a><a href="#">秋季补水</a><a href="#">牛仔裤</a><a href="#">小背心</a><a href="#">卫衣</a><a href="#" class="active">休闲裤</a></p>
+    </div>
+    
+    <div class="module">
+    	<section class="item h105">
+            <div class="m_right mR_2 h105">
+                <a href="#"><img src="img/img_04.jpg" alt="" /></a>
+                <p>小开衫+连衣裙 秋季最美搭</p>
+            </div>
+            <div class="m_left bg_09F h105">
+                <a href="#">
+                	<strong>手机频道</strong>
+                </a>
+                <div class="arrow">&gt;</div>
+            </div>
+        </section>
+        <ul class="linkList">
+        	<li><a href="#">三星</a></li>
+        	<li><a href="#">HTC</a></li>
+        	<li><a href="#">配件</a></li>
+        </ul>
+        <ul class="linkList_b">
+        	<li><a href="#"><strong>热销</strong> <span>大牌耳机迎国庆大型促销中</span><em>&gt;</em></a></li>
+        	<li><a href="#"><strong>折扣</strong> <span>全网热卖智能手机销量大排行</span><em>&gt;</em></a></li>
+        </ul>
+    </div>
+    
+    <div class="module">
+    	<section class="item h105">
+        	<div class="m_left mR_2 bg_FC9 h105">
+                <a href="#">
+                	<strong>母婴频道</strong>
+                </a>
+                <div class="arrow">&gt;</div>
+            </div>
+            <div class="m_right  h105">
+                <a href="#"><img src="img/img_04.jpg" alt="" /></a>
+                <p>小开衫+连衣裙 秋季最美搭</p>
+            </div>
+        </section>
+        <ul class="linkList">
+        	<li><a href="#">TOP店</a></li>
+        	<li><a href="#">有爱母婴</a></li>
+        	<li><a href="#">促销大全</a></li>
+        </ul>
+        <p class="comTag"><a href="#">果库精选</a><a href="#">男宝毛衣</a><a class="tag-red" href="#">秋外套</a><a href="#">T恤</a><a href="#">内衣</a><a href="#">单鞋</a><a href="#" class="active">遥控玩具</a><a href="#">羽绒服</a><a href="#">托腹裤</a></p>
+    </div>
+    
+    <div class="leimu">
+    	<ul class="linkList">
+        	<li><a href="#" class="F60">全部分类</a></li>
+        	<li><a href="#">手表</a></li>
+        	<li><a href="#">面膜</a></li>
+        	<li><a href="#">包包</a></li>
+        	<li><a href="#">机票</a></li>
+        	<li><a href="#">零食</a></li>
+            <li><a href="#">本地生活</a></li>
+        	<li><a href="#">小电器</a></li>
+        	<li><a href="#">女鞋</a></li>
+        </ul>
+    </div>
+    
+    <div class="leimu">
+    	<ul class="linkList">
+        	<li><a href="#" class="F60">促销情报</a></li>
+        	<li><a href="#">品牌特卖</a></li>
+        	<li><a href="#">付邮试用</a></li>
+        	<li><a href="#">淘金币</a></li>
+        	<li><a href="#">一淘</a></li>
+        	<li><a href="#">推推</a></li>
+            <li><a href="#">购物车</a></li>
+        	<li><a href="#">查物流</a></li>
+        	<li><a href="#">旺旺</a></li>
+        </ul>
+    </div>
+    
+    <div class="leimu">
+    	<ul class="linkList">
+        	<li><a href="#" class="F60">软件市场</a></li>
+        	<li><a href="#">iPhone应用</a></li>
+        	<li><a href="#">安卓应用</a></li>
+        </ul>
+    </div>
+    
+    <div class="userBox">
+    	<h3>用户反馈</h3>
+        <ul>
+        	<li><a href="#">触屏版2.0全新上线，期待您的反馈<em>&gt;</em></a></li>
+        	<li><a href="#">回首页不方便、找不到旺旺购物车的请进<em>&gt;</em></a></li>
+        	<li><a href="#">找不到淘金币、推推、付邮试用的请进<em>&gt;</em></a></li>
+        </ul>
+    </div>
+</div>
+
+<footer class="footer">
+	<section class="footer_t">
+    	<p class="user_info">
+    		<span><a href="#">登录</a></span>
+            <span><a href="#">注册</a></span>
+        </p>
+        <p class="gotop"><a href="javascript:scroll(0,0)" id="J_GoTop">Top<b> </b></a></p>
+    </section>
+    <nav class="footer_l">
+    	<a href="#">标准版</a>
+        <a href="#">电脑版</a>
+    </nav>
+    <p class="copyright">©2012 by 智能社 HTML5 Demo</p></footer>
+</body>
+</html>

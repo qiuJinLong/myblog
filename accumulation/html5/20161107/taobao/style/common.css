@@ -1,0 +1,160 @@
+@charset "utf-8";
+/* 
+	创建日期：2012年8月29日17:15:34
+	作者：智能社 www.zhinengshe.com
+	版本：v0.1 beta
+
+*/
+
+*{margin:0; padding:0;}
+body{background:#eee;}
+input,textarea,img{border:none; background:transparent;}
+a{ text-decoration:none;}
+li{list-style:none;}
+
+.box{width:320px;overflow:hidden; margin:0 auto;}
+.banner{height:145px; width:320px; overflow:hidden; position:relative; top:0;}
+.ul{position:absolute; width:960px; overflow:hidden; left:0; top:0;}
+.ul li{float:left; width:320px; height:145px; overflow:hidden;}
+.ul li img{width:320px; height:145px;}
+.number{height:5px; clear:both;float:left; position:absolute;
+bottom:0;
+/*display: -webkit-box;*/
+}
+.number .acitve{background:#F30;}
+.number span{display:block; width:107px; background:rgba(0,0,0,0.4); height:5px;
+/*
+-webkit-transform: translate3d(0,0,0);
+display:-webkit-box-flex;
+*/
+float:left;
+}
+/*
+说明：
+display: -webkit-box; 
+display:-webkit-box-flex;
+以上属性 不支持IE9（wp手机）
+*/
+.number span:last-child{width:106px;}/*:last-child 匹配父元素的最后一个子元素*/
+
+
+.section{
+	width:320px;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABaCAIAAAD2PqvqAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1RDk3MDVENzZEQkJFMTExQkJENkVDOUZFQkQyM0E3RCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NjUzNDQzMUMwMjgxMUUxODkyRUQ4QjI3QThDNTg1MiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NjUzNDQzMEMwMjgxMUUxODkyRUQ4QjI3QThDNTg1MiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1RTk3MDVENzZEQkJFMTExQkJENkVDOUZFQkQyM0E3RCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1RDk3MDVENzZEQkJFMTExQkJENkVDOUZFQkQyM0E3RCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ppr92dgAAAB1SURBVHjaXJBbFgMhCEMT97/m3kIjjtMPDxLJAxewJC1Rx1rU3aRK+60OhbmryazSf3ZlNC5OdLv3i6ftyWg3B5cOjy/NmdnCq48nh9d6PWOCMdr2wSbP5Buvk/PWsJ6Mv50pP4dza938yS/nH/jbP5m+AgwATztQgHq2Ux0AAAAASUVORK5CYII=) top left repeat-x;
+}
+.section h1{
+width: 80px;
+height: 54px;
+margin: 0 auto;
+}
+.section h1 img{width:80px; height:34px; vertical-align:middle;}
+.section h1 span{height:100%; vertical-align:middle; display:inline-block;}
+
+.select {width:320px; margin-bottom:10px;}
+.select input{width:-webkit-border-radius: 0;
+-webkit-appearance: none;
+background: -webkit-gradient(linear,0 0,0 100%,from(whiteSmoke),to(#FDFDFD));
+height: 33px;
+width: 250px;
+border: solid 1px #DDD;
+border-top-color: #BBB;
+padding-left: 9px;
+color: #333;
+font-size: 16px;
+vertical-align:middle;
+outline:none;
+margin-left:8px;
+}
+.select input:last-child{
+border: none;
+width: 40px;
+height: 35px;
+overflow: hidden;
+vertical-align:middle;
+background:#999;
+padding:0;
+margin:0;
+font-family:"Microsoft YaHei";
+}
+.listNav{width:100%; overflow:hidden;}
+.navLinks{width:640px; height:200px; padding-left:10px; font-size:0;}
+.navLinks img{width:70px; height:70px; float:left; display:block;}
+.navLinks a{height:100px; color:#666; font-size:12px; text-align:center; width:70px; display:inline-block; margin-right:8px;}
+.navLinks a span{display:inline-block; width:100%; clear:both;}
+
+
+
+.module{width:300px; overflow:hidden; margin:20px auto 0 auto;}
+.item{overflow:hidden; height:150px;}
+.m_left{float:left; height:150px; width:98px; background:#F90; position:relative;}
+.m_left a{display:block; width:98px; height:150px; color:#FFF; text-align:center; font-size:16px;}
+.m_left a strong{margin-top:15px; display:inline-block;}
+.m_left a span{display:inline-block; width:100%; text-align:center; font-size:12px;}
+.arrow{width:20px; height:20px; border:#FFF solid 2px; border-radius:12px; -webkit-border-radius:12px; position:absolute; right:5px; bottom:8px; line-height:20px; font-size:20px; text-align:center; color:#FFF; font-weight:bold; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+
+.m_right{width:200px; height:150px; float:left; position:relative; overflow:hidden;}
+.m_right a{display:inline-block; height:150px; width:100%;}
+.m_right p{height:20px; font-size:14px; line-height:20px; background:rgba(0,0,0,0.5); position:absolute; width:100%; left:0; bottom:0; color:#FFF; text-align:center;}
+
+.comTag{overflow:hidden;}
+.comTag a{
+	display:inline-block;
+	border:1px #DDD solid;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	font-size:12px;
+	color:#666;
+	background-color:white;
+	height:24px;
+	line-height:24px;
+	padding:0 5px;
+	margin:6px 6px 0 0;
+	font-family:verdana;
+}
+.comTag .active{background:#FF8D81; color:#FFF;}
+
+.linkList{overflow:hidden;}
+.linkList li{text-align:center;float:left;width:98px;margin:2px 3px 0 0;}
+.linkList li:last-child{margin-right:0;}
+.linkList li a{display:block; border:1px #DDD solid; border-radius:2px; -webkit-border-radius:2px;	background-color:white; height:48px; line-height:48px; font-size:16px; text-align:center;
+color:#000;}
+.linkList li .F60{color:#F60;}
+
+
+.linkList_b{overflow:hidden;}
+.linkList_b li{height:48px;line-height:48px;background-color:white;border:1px #DDD solid;border-radius: 2px;-webkit-border-radius: 2px;text-indent: 14px;position: relative;margin-top: 2px;}
+.linkList_b li a{color:#000; line-height:48px;}
+.linkList_b li a strong{vertical-align:top;}
+.linkList_b li a span{color:#999; font-size:12px;vertical-align:top;}
+.linkList_b li em{font-weight:bold; font-style:normal; position:absolute; right:8px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+
+.leimu{width:304px; margin:20px auto 0 auto;}
+.leimu .linkList{padding-left:1px;}
+.leimu .linkList li{margin-top:3px;}
+
+.userBox{overflow:hidden; width:300px; margin:20px auto 0 auto;}
+.userBox h3{margin-bottom:10px;}
+.userBox li{line-height:24px; position:relative; font-size:13px; height:24px;}
+.userBox li a{color:#333;}
+.userBox li em{font-style:normal; font-weight:bold; position:absolute; right:0;font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; font-size:14px;}
+
+.footer{width:100%; text-align:center; margin-top:20px; background:url(../img/footerBg.jpg) left top repeat-x; font-family:verdana; height:100px; font-size:13px;}
+.footer a{color:#333;}
+.footer_t{width:300px; margin:0 auto; overflow:hidden; height:30px; line-height:30px; margin-bottom:10px;}
+.footer_l{margin-bottom:10px;}
+.footer_l a{color:#F60;}
+.user_info{float:left;}
+.gotop{float:right; position:relative;}
+.gotop a{color:#999;text-transform:capitalize;position:relative;padding-right:15px;display:inline-block;}
+.gotop b{border: 4px transparent solid;border-bottom-color: #999; position:absolute; top:10px; right:0;}
+.copyright{font-size:12px; color:#999;}
+.kf{margin-left:8px; color:#999;}
+
+/*common is css*/
+.mR_2{margin-right:2px;}
+.bg_f99{background:#F99;}
+.bg_333{background:#333;}
+.bg_09F{background:#09F;}
+.bg_FC9{background:#FC9;}
+.h105{height:105px;}
+

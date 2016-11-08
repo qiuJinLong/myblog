@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>文字阴影</title>
+<style type="text/css">
+    body{ background: #000; font-weight: bold; font-family: 微软雅黑}
+    span{display: none; color: #fff;}
+    span.on{display: inline-block}
+</style>
+<script type="text/javascript">
+    window.onload = function () {
+        var str = "APEC会议结束后，美国总统奥巴马对中国进行国事访问。" +
+                "11日至12日，从中南海瀛台夜话至人民大会堂的正式会谈，日程满满、内容丰富。" +
+                "昨天，人民日报微信公众号刊发《习近平奥巴马在瀛台，到底聊了什么》，披露了包括习奥瀛台" +
+                "会晤的话题及一些现场轶事。文中提到，习近平与奥巴马就中美两国关系进行深入交流，在中国经济、" +
+                "中国改革、中国依法治国、人权和主权等问题进行了精彩谈话。"
+        var timer = null;
+        for(var i=0; i<str.length; i++) {
+            var oSpan = document.createElement("span");
+            oSpan.innerHTML = str.charAt(i);
+            document.body.appendChild(oSpan);
+        }
+        var i=0;
+        var aSpan = document.body.children;
+        tiemr = setInterval(function() {
+            aSpan[i].className="on";
+            i++;
+            if(i == aSpan.length) {
+                clearInterval(timer);
+            }
+        }, 100);
+    };
+</script>
+</head>
+<body>
+<div id="div1">智能社</div>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>index</title>
+<meta name="viewport" content="width=device-width, user-scalable=0,initial-scale=1.0">
+<style type="text/css">
+    #div1{width: 200px; height: 200px; background: red; position: absolute; left: 0; top: 0;}
+</style>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var oDiv = document.getElementById("div1");
+        var tX = 0,
+                tY = 0;
+        oDiv.addEventListener("touchstart", function(ev) {
+            console.log(disX, disY);
+            var disX = ev.targetTouches[0].pageX - tX,
+                    disY = ev.targetTouches[0].pageY - tY;
+
+            function fnMove(ev) {
+                console.log(tX, tY);
+                tX = ev.targetTouches[0].pageX - disX;
+                tY = ev.targetTouches[0].pageY - disY;
+                oDiv.style.transform = "translate("+tX+"px, "+tY+"px)";
+            }
+            oDiv.addEventListener("touchmove", fnMove, false);
+            function fnEnd() {
+                oDiv.removeEventListener("touchmove", fnMove, false);
+                oDiv.removeEventListener("touchend", fnEnd, false);
+            }
+            oDiv.addEventListener("touchend", fnEnd, false);
+            ev.preventDefault();
+            //return false;
+        }, false);
+    }, false);
+</script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>
